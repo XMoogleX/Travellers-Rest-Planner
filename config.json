@@ -1,934 +1,1044 @@
 {
 	"crops": [
 		{
-			"buy": 70,
-			"harvest": {},
-			"id": "amaranth",
-			"index": 299,
-			"name": "Amaranth",
-			"scythe": true,
-			"seasons": [
-				"fall"
-			],
-			"sell": 150,
-			"stages": [
-				1,
-				2,
-				2,
-				2
-			]
-		},
-		{
-			"buy": 700,
-			"harvest": {},
-			"id": "ancient_fruit",
-			"index": 499,
-			"name": "Ancient Fruit",
-			"regrow": 7,
+			"id": "aroma_hops",
+			"gameItemId": null,
+			"name": "Aroma Hops",
+			"buy": 350,
+			"sell": 965,
+			"yield": 2,
+			"growTime": 3,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": false,
+			"trellis": true,
+			"category": "Hop",
 			"seasons": [
 				"spring",
 				"summer",
-				"fall"
+				"autumn",
+				"winter"
 			],
-			"sell": 550,
-			"stages": [
-				2,
-				7,
-				7,
-				7,
-				5
-			]
+			"source": "Lia & Rhia"
 		},
 		{
-			"buy": 30,
-			"harvest": {},
-			"id": "artichoke",
-			"index": 489,
-			"name": "Artichoke",
+			"id": "barley",
+			"gameItemId": null,
+			"name": "Barley",
+			"buy": 292,
+			"sell": 950,
+			"yield": 2,
+			"growTime": 3,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": true,
+			"trellis": false,
+			"category": "Grain",
 			"seasons": [
-				"fall"
+				"spring",
+				"summer"
 			],
-			"sell": 160,
-			"stages": [
-				2,
-				2,
-				1,
-				2,
-				1
-			]
+			"source": "Lia & Rhia"
 		},
 		{
-			"buy": 20,
-			"harvest": {},
+			"id": "beans",
+			"gameItemId": null,
+			"name": "Beans",
+			"buy": 1125,
+			"sell": 755,
+			"yield": 3,
+			"growTime": 4,
+			"regrowable": true,
+			"regrow": 3,
+			"scythe": false,
+			"trellis": false,
+			"category": "Legumes",
+			"seasons": [
+				"spring",
+				"winter"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
 			"id": "beet",
-			"index": 494,
+			"gameItemId": null,
 			"name": "Beet",
-			"seasons": [
-				"fall"
-			],
-			"sell": 100,
-			"stages": [
-				1,
-				1,
-				2,
-				2
-			]
-		},
-		{
-			"buy": 30,
-			"harvest": {},
-			"id": "blue_jazz",
-			"index": 429,
-			"name": "Blue Jazz",
+			"buy": 440,
+			"sell": 2420,
+			"yield": 1,
+			"growTime": 4,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": false,
+			"trellis": false,
+			"category": "Vegetable",
 			"seasons": [
 				"spring"
 			],
-			"sell": 50,
-			"stages": [
-				1,
-				2,
-				2,
-				2
-			]
+			"source": "Lia & Rhia"
 		},
 		{
-			"buy": 80,
-			"harvest": {
-				"extra_chance": 0.02,
-				"level_increase": 5,
-				"max": 5,
-				"min": 3
-			},
-			"id": "blueberry",
-			"index": 481,
-			"name": "Blueberry",
-			"regrow": 4,
-			"seasons": [
-				"summer"
-			],
-			"sell": 50,
-			"stages": [
-				1,
-				3,
-				3,
-				4,
-				2
-			]
-		},
-		{
-			"buy": 50,
-			"harvest": {},
-			"id": "bok_choy",
-			"index": 491,
-			"name": "Bok Choy",
-			"seasons": [
-				"fall"
-			],
-			"sell": 80,
-			"stages": [
-				1,
-				1,
-				1,
-				1
-			]
-		},
-		{
-			"buy": 80,
-			"harvest": {},
-			"id": "cauliflower",
-			"index": 474,
-			"name": "Cauliflower",
-			"seasons": [
-				"spring"
-			],
-			"sell": 175,
-			"stages": [
-				1,
-				2,
-				4,
-				4,
-				1
-			]
-		},
-		{
-			"buy": 30,
-			"harvest": {
-				"extra_chance": 0.02,
-				"level_increase": 10,
-				"max": 6,
-				"min": 4
-			},
-			"id": "coffee_bean",
-			"index": 433,
-			"name": "Coffee Bean",
-			"note": "Sold by Travelling Cart for ~2500g",
-			"regrow": 2,
+			"id": "bell_pepper",
+			"gameItemId": null,
+			"name": "Bell Pepper",
+			"buy": 660,
+			"sell": 660,
+			"yield": 2,
+			"growTime": 3,
+			"regrowable": true,
+			"regrow": 3,
+			"scythe": false,
+			"trellis": false,
+			"category": "Vegetable",
 			"seasons": [
 				"spring",
 				"summer"
 			],
-			"sell": 15,
-			"stages": [
-				1,
-				2,
-				2,
-				3,
-				2
-			]
+			"source": "Lia & Rhia"
 		},
 		{
-			"buy": 150,
-			"harvest": {
-				"extra_chance": 0.0,
-				"level_increase": 5,
-				"max": 2,
-				"min": 1
-			},
-			"id": "corn",
-			"index": 487,
-			"name": "Corn",
-			"regrow": 4,
+			"id": "bitter_hops",
+			"gameItemId": null,
+			"name": "Bitter Hops",
+			"buy": 260,
+			"sell": 650,
+			"yield": 2,
+			"growTime": 3,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": false,
+			"trellis": true,
+			"category": "Hop",
 			"seasons": [
+				"spring",
 				"summer",
-				"fall"
+				"autumn",
+				"winter"
 			],
-			"sell": 50,
-			"stages": [
-				2,
-				3,
-				3,
-				3,
-				3
-			]
+			"source": "Lia & Rhia"
 		},
 		{
-			"buy": 240,
-			"harvest": {
-				"extra_chance": 0.1,
-				"level_increase": 5,
-				"max": 6,
-				"min": 2
-			},
-			"id": "cranberries",
-			"index": 493,
-			"name": "Cranberries",
-			"regrow": 5,
-			"seasons": [
-				"fall"
-			],
-			"sell": 75,
-			"stages": [
-				1,
-				2,
-				1,
-				1,
-				2
-			]
-		},
-		{
-			"buy": 20,
-			"harvest": {
-				"extra_chance": 0.002,
-				"level_increase": 10,
-				"max": 2,
-				"min": 1
-			},
-			"id": "eggplant",
-			"index": 488,
-			"name": "Eggplant",
-			"regrow": 5,
-			"seasons": [
-				"fall"
-			],
-			"sell": 60,
-			"stages": [
-				1,
-				1,
-				1,
-				1,
-				1
-			]
-		},
-		{
-			"buy": 200,
-			"harvest": {},
-			"id": "fairy_rose",
-			"index": 425,
-			"name": "Fairy Rose",
-			"seasons": [
-				"fall"
-			],
-			"sell": 290,
-			"stages": [
-				1,
-				4,
-				4,
-				3
-			]
-		},
-		{
-			"buy": 40,
-			"harvest": {},
-			"id": "garlic",
-			"index": 476,
-			"name": "Garlic",
-			"seasons": [
-				"spring"
-			],
-			"sell": 60,
-			"stages": [
-				1,
-				1,
-				1,
-				1
-			]
-		},
-		{
-			"buy": 60,
-			"harvest": {
-				"extra_chance": 0.0,
-				"level_increase": 6,
-				"max": 2,
-				"min": 1
-			},
-			"id": "grape",
-			"index": 301,
-			"name": "Grape",
-			"regrow": 3,
-			"seasons": [
-				"fall"
-			],
-			"sell": 80,
-			"stages": [
-				1,
-				1,
-				2,
-				3,
-				3
-			],
-			"trellis": true
-		},
-		{
-			"buy": 60,
-			"harvest": {
-				"extra_chance": 0.0,
-				"level_increase": 6,
-				"max": 2,
-				"min": 1
-			},
-			"id": "green_bean",
-			"index": 473,
-			"name": "Green Bean",
-			"regrow": 3,
-			"seasons": [
-				"spring"
-			],
-			"sell": 40,
-			"stages": [
-				1,
-				1,
-				1,
-				3,
-				4
-			],
-			"trellis": true
-		},
-		{
-			"buy": 60,
-			"harvest": {
-				"extra_chance": 0.0,
-				"level_increase": 6,
-				"max": 2,
-				"min": 1
-			},
-			"id": "hops",
-			"index": 302,
-			"name": "Hops",
-			"regrow": 1,
-			"seasons": [
-				"summer"
-			],
-			"sell": 25,
-			"stages": [
-				1,
-				1,
-				2,
-				3,
-				4
-			],
-			"trellis": true
-		},
-		{
-			"buy": 40,
-			"harvest": {
-				"extra_chance": 0.03,
-				"level_increase": 5,
-				"max": 1,
-				"min": 1
-			},
-			"id": "hot_pepper",
-			"index": 482,
-			"name": "Hot Pepper",
-			"regrow": 3,
-			"seasons": [
-				"summer"
-			],
-			"sell": 40,
-			"stages": [
-				1,
-				1,
-				1,
-				1,
-				1
-			]
-		},
-		{
-			"buy": 70,
-			"harvest": {},
-			"id": "kale",
-			"index": 477,
-			"name": "Kale",
-			"scythe": true,
-			"seasons": [
-				"spring"
-			],
-			"sell": 110,
-			"stages": [
-				1,
-				2,
-				2,
-				1
-			]
-		},
-		{
-			"buy": 80,
-			"harvest": {},
-			"id": "melon",
-			"index": 479,
-			"name": "Melon",
-			"seasons": [
-				"summer"
-			],
-			"sell": 250,
-			"stages": [
-				1,
-				2,
-				3,
-				3,
-				3
-			]
-		},
-		{
-			"buy": 20,
-			"harvest": {},
-			"id": "parsnip",
-			"index": 472,
-			"name": "Parsnip",
-			"seasons": [
-				"spring"
-			],
-			"sell": 35,
-			"stages": [
-				1,
-				1,
-				1,
-				1
-			]
-		},
-		{
-			"buy": 100,
-			"harvest": {},
-			"id": "poppy",
-			"index": 453,
-			"name": "Poppy",
-			"seasons": [
-				"summer"
-			],
-			"sell": 140,
-			"stages": [
-				1,
-				2,
-				2,
-				2
-			]
-		},
-		{
-			"buy": 50,
-			"harvest": {
-				"extra_chance": 0.2,
-				"level_increase": 8,
-				"max": 2,
-				"min": 1
-			},
-			"id": "potato",
-			"index": 475,
-			"name": "Potato",
-			"seasons": [
-				"spring"
-			],
-			"sell": 80,
-			"stages": [
-				1,
-				1,
-				1,
-				2,
-				1
-			]
-		},
-		{
-			"buy": 100,
-			"harvest": {},
-			"id": "pumpkin",
-			"index": 490,
-			"name": "Pumpkin",
-			"seasons": [
-				"fall"
-			],
-			"sell": 320,
-			"stages": [
-				1,
-				2,
-				3,
-				4,
-				3
-			]
-		},
-		{
-			"buy": 40,
-			"harvest": {},
-			"id": "radish",
-			"index": 484,
-			"name": "Radish",
-			"seasons": [
-				"summer"
-			],
-			"sell": 90,
-			"stages": [
-				2,
-				1,
-				2,
-				1
-			]
-		},
-		{
-			"buy": 100,
-			"harvest": {},
-			"id": "red_cabbage",
-			"index": 485,
-			"name": "Red Cabbage",
-			"seasons": [
-				"summer"
-			],
-			"sell": 260,
-			"stages": [
-				2,
-				1,
-				2,
-				2,
-				2
-			]
-		},
-		{
-			"buy": 100,
-			"harvest": {},
-			"id": "rhubarb",
-			"index": 478,
-			"name": "Rhubarb",
-			"seasons": [
-				"spring"
-			],
-			"sell": 220,
-			"stages": [
-				2,
-				2,
-				2,
-				3,
-				4
-			]
-		},
-		{
-			"buy": 400,
-			"harvest": {},
-			"id": "starfruit",
-			"index": 486,
-			"name": "Starfruit",
-			"seasons": [
-				"summer"
-			],
-			"sell": 750,
-			"stages": [
-				2,
-				3,
-				2,
-				3,
-				3
-			]
-		},
-		{
-			"buy": 100,
-			"harvest": {
-				"extra_chance": 0.02,
-				"level_increase": 5,
-				"max": 1,
-				"min": 1
-			},
-			"id": "strawberry",
-			"index": 745,
-			"name": "Strawberry",
+			"id": "black_tea",
+			"gameItemId": null,
+			"name": "Black Tea",
+			"buy": 1224,
+			"sell": 1020,
+			"yield": 2,
+			"growTime": 5,
+			"regrowable": true,
 			"regrow": 4,
+			"scythe": false,
+			"trellis": false,
+			"category": "Tea",
 			"seasons": [
-				"spring"
+				"autumn",
+				"winter"
 			],
-			"sell": 120,
-			"stages": [
-				1,
-				1,
-				2,
-				2,
-				2
-			]
+			"source": "Lia & Rhia"
 		},
 		{
-			"buy": 50,
-			"harvest": {},
-			"id": "summer_spangle",
-			"index": 455,
-			"name": "Summer Spangle",
+			"id": "blueberry",
+			"gameItemId": null,
+			"name": "Blueberry",
+			"buy": 1050,
+			"sell": 1050,
+			"yield": 2,
+			"growTime": 4,
+			"regrowable": true,
+			"regrow": 3,
+			"scythe": false,
+			"trellis": false,
+			"category": "Fruit",
 			"seasons": [
+				"spring",
 				"summer"
 			],
-			"sell": 90,
-			"stages": [
-				1,
-				2,
-				3,
-				2
-			]
+			"source": "Lia & Rhia"
 		},
 		{
-			"buy": 125,
-			"harvest": {},
-			"id": "sunflower",
-			"index": 431,
-			"name": "Sunflower",
-			"note": "Cheapest at JojaMart",
-			"seasons": [
-				"summer",
-				"fall"
-			],
-			"sell": 80,
-			"stages": [
-				1,
-				2,
-				3,
-				2
-			]
-		},
-		{
-			"buy": 1000,
-			"harvest": {},
-			"id": "sweet_gem_berry",
-			"index": 347,
-			"name": "Sweet Gem Berry",
-			"seasons": [
-				"fall"
-			],
+			"id": "broccoli",
+			"gameItemId": null,
+			"name": "Broccoli",
+			"buy": 600,
 			"sell": 3000,
-			"stages": [
-				2,
-				4,
-				6,
-				6,
-				6
-			]
+			"yield": 1,
+			"growTime": 6,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": false,
+			"trellis": false,
+			"category": "Vegetable",
+			"seasons": [
+				"autumn",
+				"winter"
+			],
+			"source": "Lia & Rhia"
 		},
 		{
-			"buy": 50,
-			"harvest": {
-				"extra_chance": 0.05,
-				"level_increase": 6,
-				"max": 1,
-				"min": 1
-			},
-			"id": "tomato",
-			"index": 480,
-			"name": "Tomato",
-			"regrow": 4,
+			"id": "cabbage",
+			"gameItemId": null,
+			"name": "Cabbage",
+			"buy": 416,
+			"sell": 2280,
+			"yield": 1,
+			"growTime": 4,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": false,
+			"trellis": false,
+			"category": "Vegetable",
 			"seasons": [
+				"autumn",
+				"winter"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "carrot",
+			"gameItemId": null,
+			"name": "Carrot",
+			"buy": 220,
+			"sell": 660,
+			"yield": 2,
+			"growTime": 3,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": false,
+			"trellis": false,
+			"category": "Vegetable",
+			"seasons": [
+				"spring",
+				"summer",
+				"autumn"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "cauliflower",
+			"gameItemId": null,
+			"name": "Cauliflower",
+			"buy": 910,
+			"sell": 4550,
+			"yield": 1,
+			"growTime": 6,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": false,
+			"trellis": false,
+			"category": "Vegetable",
+			"seasons": [
+				"spring",
+				"winter"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "centennial_hops",
+			"gameItemId": null,
+			"name": "Centennial Hops",
+			"buy": 990,
+			"sell": 825,
+			"yield": 2,
+			"growTime": 5,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": false,
+			"trellis": true,
+			"category": "Hop",
+			"seasons": [
+				"autumn",
+				"winter"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "chickpeas",
+			"gameItemId": null,
+			"name": "Chickpeas",
+			"buy": 435,
+			"sell": 725,
+			"yield": 3,
+			"growTime": 4,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": false,
+			"trellis": false,
+			"category": "Legumes",
+			"seasons": [
+				"autumn",
+				"winter"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "chili",
+			"gameItemId": null,
+			"name": "Chili",
+			"buy": 936,
+			"sell": 520,
+			"yield": 3,
+			"growTime": 4,
+			"regrowable": true,
+			"regrow": 3,
+			"scythe": false,
+			"trellis": false,
+			"category": "Vegetable",
+			"seasons": [
+				"spring",
 				"summer"
 			],
-			"sell": 60,
-			"stages": [
-				2,
-				2,
-				2,
-				2,
-				3
-			]
+			"source": "Lia & Rhia"
 		},
 		{
-			"buy": 20,
-			"harvest": {},
-			"id": "tulip",
-			"index": 427,
-			"name": "Tulip",
-			"seasons": [
-				"spring"
-			],
-			"sell": 30,
-			"stages": [
-				1,
-				1,
-				2,
-				2
-			]
-		},
-		{
-			"buy": 10,
-			"harvest": {},
-			"id": "wheat",
-			"index": 483,
-			"name": "Wheat",
-			"scythe": true,
+			"id": "citra_hops",
+			"gameItemId": null,
+			"name": "Citra Hops",
+			"buy": 480,
+			"sell": 1320,
+			"yield": 2,
+			"growTime": 5,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": false,
+			"trellis": true,
+			"category": "Hop",
 			"seasons": [
 				"summer",
-				"fall"
+				"autumn"
 			],
-			"sell": 25,
-			"stages": [
-				1,
-				1,
-				1,
-				1
-			]
+			"source": "Lia & Rhia"
 		},
 		{
-			"buy": 60,
-			"harvest": {},
-			"id": "yam",
-			"index": 492,
-			"name": "Yam",
+			"id": "corn",
+			"gameItemId": null,
+			"name": "Corn",
+			"buy": 434,
+			"sell": 1220,
+			"yield": 2,
+			"growTime": 4,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": true,
+			"trellis": false,
+			"category": "Grain",
 			"seasons": [
-				"fall"
+				"summer",
+				"autumn"
 			],
-			"sell": 160,
-			"stages": [
-				1,
-				3,
-				3,
-				3
-			]
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "cucumber",
+			"gameItemId": null,
+			"name": "Cucumber",
+			"buy": 360,
+			"sell": 1800,
+			"yield": 1,
+			"growTime": 4,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": false,
+			"trellis": true,
+			"category": "Vegetable",
+			"seasons": [
+				"spring",
+				"summer"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "dual_hops",
+			"gameItemId": null,
+			"name": "Dual Hops",
+			"buy": 450,
+			"sell": 1230,
+			"yield": 2,
+			"growTime": 4,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": false,
+			"trellis": true,
+			"category": "Hop",
+			"seasons": [
+				"spring",
+				"summer",
+				"autumn",
+				"winter"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "eggplant",
+			"gameItemId": null,
+			"name": "Eggplant",
+			"buy": 440,
+			"sell": 2420,
+			"yield": 1,
+			"growTime": 4,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": false,
+			"trellis": false,
+			"category": "Vegetable",
+			"seasons": [
+				"spring",
+				"autumn"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "galaxy_hops",
+			"gameItemId": null,
+			"name": "Galaxy Hops",
+			"buy": 570,
+			"sell": 1565,
+			"yield": 2,
+			"growTime": 5,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": false,
+			"trellis": true,
+			"category": "Hop",
+			"seasons": [
+				"spring",
+				"summer"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "garlic",
+			"gameItemId": null,
+			"name": "Garlic",
+			"buy": 454,
+			"sell": 1250,
+			"yield": 2,
+			"growTime": 4,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": false,
+			"trellis": false,
+			"category": "Vegetable",
+			"seasons": [
+				"spring",
+				"summer",
+				"autumn"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "green_bean",
+			"gameItemId": null,
+			"name": "Green Bean",
+			"buy": 900,
+			"sell": 550,
+			"yield": 3,
+			"growTime": 3,
+			"regrowable": true,
+			"regrow": 3,
+			"scythe": false,
+			"trellis": false,
+			"category": "Legumes",
+			"seasons": [
+				"autumn",
+				"winter"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "green_tea",
+			"gameItemId": null,
+			"name": "Green Tea",
+			"buy": 624,
+			"sell": 520,
+			"yield": 2,
+			"growTime": 3,
+			"regrowable": true,
+			"regrow": 3,
+			"scythe": false,
+			"trellis": false,
+			"category": "Tea",
+			"seasons": [
+				"spring",
+				"summer",
+				"winter"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "leek",
+			"gameItemId": null,
+			"name": "Leek",
+			"buy": 301,
+			"sell": 502,
+			"yield": 2,
+			"growTime": 8,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": false,
+			"trellis": false,
+			"category": "Vegetable",
+			"seasons": [
+				"spring",
+				"summer"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "lentil",
+			"gameItemId": null,
+			"name": "Lentil",
+			"buy": 330,
+			"sell": 550,
+			"yield": 3,
+			"growTime": 3,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": false,
+			"trellis": false,
+			"category": "Legumes",
+			"seasons": [
+				"autumn",
+				"winter"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "lettuce",
+			"gameItemId": null,
+			"name": "Lettuce",
+			"buy": 440,
+			"sell": 2430,
+			"yield": 1,
+			"growTime": 4,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": false,
+			"trellis": false,
+			"category": "Vegetable",
+			"seasons": [
+				"spring",
+				"summer"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "melon",
+			"gameItemId": null,
+			"name": "Melon",
+			"buy": 850,
+			"sell": 4250,
+			"yield": 1,
+			"growTime": 6,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": false,
+			"trellis": false,
+			"category": "Fruit",
+			"seasons": [
+				"spring",
+				"summer"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "onion",
+			"gameItemId": null,
+			"name": "Onion",
+			"buy": 318,
+			"sell": 1900,
+			"yield": 1,
+			"growTime": 4,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": false,
+			"trellis": false,
+			"category": "Vegetable",
+			"seasons": [
+				"spring",
+				"autumn",
+				"winter"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "peanut",
+			"gameItemId": null,
+			"name": "Peanut",
+			"buy": 540,
+			"sell": 1485,
+			"yield": 2,
+			"growTime": 5,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": false,
+			"trellis": false,
+			"category": "Legumes",
+			"seasons": [
+				"autumn",
+				"winter"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "peas",
+			"gameItemId": null,
+			"name": "Peas",
+			"buy": 576,
+			"sell": 480,
+			"yield": 3,
+			"growTime": 3,
+			"regrowable": true,
+			"regrow": 3,
+			"scythe": false,
+			"trellis": false,
+			"category": "Legumes",
+			"seasons": [
+				"spring",
+				"summer"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "pineapple",
+			"gameItemId": null,
+			"name": "Pineapple",
+			"buy": 1016,
+			"sell": 2540,
+			"yield": 2,
+			"growTime": 6,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": false,
+			"trellis": false,
+			"category": "Fruit",
+			"seasons": [
+				"autumn",
+				"winter"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "potato",
+			"gameItemId": null,
+			"name": "Potato",
+			"buy": 640,
+			"sell": 1540,
+			"yield": 2,
+			"growTime": 5,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": false,
+			"trellis": false,
+			"category": "Vegetable",
+			"seasons": [
+				"spring",
+				"autumn",
+				"winter"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "pumpkin",
+			"gameItemId": null,
+			"name": "Pumpkin",
+			"buy": 1104,
+			"sell": 5520,
+			"yield": 1,
+			"growTime": 6,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": false,
+			"trellis": false,
+			"category": "Vegetable",
+			"seasons": [
+				"autumn",
+				"winter"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "raspberry",
+			"gameItemId": null,
+			"name": "Raspberry",
+			"buy": 945,
+			"sell": 525,
+			"yield": 3,
+			"growTime": 3,
+			"regrowable": true,
+			"regrow": 3,
+			"scythe": false,
+			"trellis": false,
+			"category": "Fruit",
+			"seasons": [
+				"summer",
+				"autumn"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "red_grape",
+			"gameItemId": null,
+			"name": "Red Grape",
+			"buy": 960,
+			"sell": 1080,
+			"yield": 2,
+			"growTime": 4,
+			"regrowable": true,
+			"regrow": 3,
+			"scythe": false,
+			"trellis": true,
+			"category": "Fruit",
+			"seasons": [
+				"summer",
+				"autumn"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "red_tea",
+			"gameItemId": null,
+			"name": "Red Tea",
+			"buy": 900,
+			"sell": 750,
+			"yield": 2,
+			"growTime": 4,
+			"regrowable": true,
+			"regrow": 3,
+			"scythe": false,
+			"trellis": false,
+			"category": "Tea",
+			"seasons": [
+				"spring",
+				"autumn"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "rice",
+			"gameItemId": null,
+			"name": "Rice",
+			"buy": 298,
+			"sell": 910,
+			"yield": 2,
+			"growTime": 3,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": true,
+			"trellis": false,
+			"category": "Grain",
+			"seasons": [
+				"spring",
+				"summer",
+				"autumn"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "rye",
+			"gameItemId": null,
+			"name": "Rye",
+			"buy": 568,
+			"sell": 1560,
+			"yield": 2,
+			"growTime": 5,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": true,
+			"trellis": false,
+			"category": "Grain",
+			"seasons": [
+				"autumn",
+				"winter"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "soybean",
+			"gameItemId": null,
+			"name": "Soybean",
+			"buy": 560,
+			"sell": 1400,
+			"yield": 2,
+			"growTime": 5,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": false,
+			"trellis": false,
+			"category": "Legumes",
+			"seasons": [
+				"spring",
+				"summer",
+				"autumn"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "spinach",
+			"gameItemId": null,
+			"name": "Spinach",
+			"buy": 340,
+			"sell": 1700,
+			"yield": 1,
+			"growTime": 4,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": false,
+			"trellis": false,
+			"category": "Vegetable",
+			"seasons": [
+				"spring",
+				"autumn"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "spring_onion",
+			"gameItemId": null,
+			"name": "Spring Onion",
+			"buy": 432,
+			"sell": 850,
+			"yield": 2,
+			"growTime": 3,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": false,
+			"trellis": false,
+			"category": "Vegetable",
+			"seasons": [
+				"spring",
+				"summer",
+				"autumn"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "strawberry",
+			"gameItemId": null,
+			"name": "Strawberry",
+			"buy": 1176,
+			"sell": 1175,
+			"yield": 2,
+			"growTime": 5,
+			"regrowable": true,
+			"regrow": 4,
+			"scythe": false,
+			"trellis": false,
+			"category": "Fruit",
+			"seasons": [
+				"spring",
+				"summer"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "sugar_cane",
+			"gameItemId": null,
+			"name": "Sugar Cane",
+			"buy": 768,
+			"sell": 1280,
+			"yield": 3,
+			"growTime": 6,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": false,
+			"trellis": false,
+			"category": "Vegetable",
+			"seasons": [
+				"spring",
+				"autumn"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "sunflower",
+			"gameItemId": null,
+			"name": "Sunflower",
+			"buy": 408,
+			"sell": 680,
+			"yield": 3,
+			"growTime": 4,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": false,
+			"trellis": false,
+			"category": "Vegetable",
+			"seasons": [
+				"summer",
+				"autumn"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "sweet_potato",
+			"gameItemId": null,
+			"name": "Sweet Potato",
+			"buy": 580,
+			"sell": 1600,
+			"yield": 2,
+			"growTime": 5,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": false,
+			"trellis": false,
+			"category": "Vegetable",
+			"seasons": [
+				"autumn",
+				"winter"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "tomato",
+			"gameItemId": null,
+			"name": "Tomato",
+			"buy": 900,
+			"sell": 825,
+			"yield": 2,
+			"growTime": 3,
+			"regrowable": true,
+			"regrow": 3,
+			"scythe": false,
+			"trellis": true,
+			"category": "Vegetable",
+			"seasons": [
+				"spring",
+				"summer"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "turnip",
+			"gameItemId": null,
+			"name": "Turnip",
+			"buy": 420,
+			"sell": 2100,
+			"yield": 1,
+			"growTime": 4,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": false,
+			"trellis": false,
+			"category": "Vegetable",
+			"seasons": [
+				"summer",
+				"autumn"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "watermelon",
+			"gameItemId": null,
+			"name": "Watermelon",
+			"buy": 1080,
+			"sell": 5400,
+			"yield": 1,
+			"growTime": 6,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": false,
+			"trellis": false,
+			"category": "Fruit",
+			"seasons": [
+				"summer",
+				"autumn"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "wheat",
+			"gameItemId": null,
+			"name": "Wheat",
+			"buy": 340,
+			"sell": 1050,
+			"yield": 2,
+			"growTime": 4,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": true,
+			"trellis": false,
+			"category": "Grain",
+			"seasons": [
+				"spring",
+				"summer",
+				"winter"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "white_bean",
+			"gameItemId": null,
+			"name": "White Bean",
+			"buy": 1080,
+			"sell": 685,
+			"yield": 3,
+			"growTime": 3,
+			"regrowable": true,
+			"regrow": 3,
+			"scythe": false,
+			"trellis": false,
+			"category": "Legumes",
+			"seasons": [
+				"summer",
+				"autumn"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "white_grape",
+			"gameItemId": null,
+			"name": "White Grape",
+			"buy": 1020,
+			"sell": 1155,
+			"yield": 2,
+			"growTime": 4,
+			"regrowable": true,
+			"regrow": 3,
+			"scythe": false,
+			"trellis": true,
+			"category": "Fruit",
+			"seasons": [
+				"spring",
+				"summer"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "white_tea",
+			"gameItemId": null,
+			"name": "White Tea",
+			"buy": 960,
+			"sell": 800,
+			"yield": 2,
+			"growTime": 4,
+			"regrowable": true,
+			"regrow": 3,
+			"scythe": false,
+			"trellis": false,
+			"category": "Tea",
+			"seasons": [
+				"spring",
+				"summer"
+			],
+			"source": "Lia & Rhia"
+		},
+		{
+			"id": "zucchini",
+			"gameItemId": null,
+			"name": "Zucchini",
+			"buy": 310,
+			"sell": 1850,
+			"yield": 1,
+			"growTime": 4,
+			"regrowable": false,
+			"regrow": null,
+			"scythe": false,
+			"trellis": false,
+			"category": "Vegetable",
+			"seasons": [
+				"summer",
+				"autumn"
+			],
+			"source": "Lia & Rhia"
 		}
-	],
-	"fertilizer": [
-		{
-			"buy": 0,
-			"id": "none",
-			"name": "None"
-		},
-		{
-			"buy": 100,
-			"id": "basic_fertilizer",
-			"name": "Basic Fertilizer"
-		},
-		{
-			"buy": 150,
-			"id": "quality_fertilizer",
-			"name": "Quality Fertilizer"
-		},
-		{
-			"buy": 100,
-			"growth_rate": 0.1,
-			"id": "speed_gro",
-			"name": "Speed-Gro"
-		},
-		{
-			"buy": 150,
-			"growth_rate": 0.25,
-			"id": "delux_speed_gro",
-			"name": "Delux Speed-Gro"
-		}
-	],
-	"events": {
-		"spring": [
-			{
-				"day": 4,
-				"name": "Kent"
-			},
-			{
-				"day": 7,
-				"name": "Lewis"
-			},
-			{
-				"day": 10,
-				"name": "Vincent"
-			},
-			{
-				"day": 13,
-				"name": "Egg Festival",
-				"festival": true
-			},
-			{
-				"day": 14,
-				"name": "Haley"
-			},
-			{
-				"day": 18,
-				"name": "Pam"
-			},
-			{
-				"day": 20,
-				"name": "Shane"
-			},
-			{
-				"day": 24,
-				"name": "Flower Dance",
-				"festival": true
-			},
-			{
-				"day": 26,
-				"name": "Pierre"
-			},
-			{
-				"day": 27,
-				"name": "Emily"
-			}
-		],
-		"summer": [
-			{
-				"day": 4,
-				"name": "Jas"
-			},
-			{
-				"day": 8,
-				"name": "Gus"
-			},
-			{
-				"day": 10,
-				"name": "Maru"
-			},
-			{
-				"day": 11,
-				"name": "Luau",
-				"festival": true
-			},
-			{
-				"day": 13,
-				"name": "Alex"
-			},
-			{
-				"day": 17,
-				"name": "Sam"
-			},
-			{
-				"day": 19,
-				"name": "Demetrius"
-			},
-			{
-				"day": 22,
-				"name": "Dwarf"
-			},
-			{
-				"day": 24,
-				"name": "Willy"
-			},
-			{
-				"day": 28,
-				"name": "Dance of the Moonlight Jellies",
-				"festival": true
-			}
-		],
-		"fall": [
-			{
-				"day": 2,
-				"name": "Penny"
-			},
-			{
-				"day": 5,
-				"name": "Elliot"
-			},
-			{
-				"day": 11,
-				"name": "Jodi"
-			},
-			{
-				"day": 13,
-				"name": "Abigail"
-			},
-			{
-				"day": 15,
-				"name": "Sandy"
-			},
-			{
-				"day": 16,
-				"name": "Stardew Valley Fair",
-				"festival": true
-			},
-			{
-				"day": 18,
-				"name": "Marnie"
-			},
-			{
-				"day": 21,
-				"name": "Robin"
-			},
-			{
-				"day": 24,
-				"name": "George"
-			},
-			{
-				"day": 27,
-				"name": "Spirit's Eve",
-				"festival": true
-			}
-		],
-		"winter": [
-			{
-				"day": 1,
-				"name": "Krobus"
-			},
-			{
-				"day": 3,
-				"name": "Linus"
-			},
-			{
-				"day": 7,
-				"name": "Caroline"
-			},
-			{
-				"day": 8,
-				"name": "Festival of Ice",
-				"festival": true
-			},
-			{
-				"day": 10,
-				"name": "Sebastian"
-			},
-			{
-				"day": 14,
-				"name": "Harvey"
-			},
-			{
-				"day": 17,
-				"name": "Wizard"
-			},
-			{
-				"day": 20,
-				"name": "Evelyn"
-			},
-			{
-				"day": 23,
-				"name": "Leah"
-			},
-			{
-				"day": 25,
-				"name": "Feast of the Winter Star",
-				"festival": true
-			},
-			{
-				"day": 26,
-				"name": "Clint"
-			}
-		]
-	}
+	]
 }
