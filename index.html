@@ -44,14 +44,8 @@
 						<div class="btn btn-default" ng-click="self.inc_year(-1)"><i class="fa fa-chevron-left"></i></div>
 						<div class="btn btn-default" ng-click="self.inc_year(1)"><i class="fa fa-chevron-right"></i></div>
 					</div>
-					<div class="farm_picker">
-						<div class="btn btn-default" ng-click="self.toggle_mode()">
-							<img ng-src="{{self.cfarm().get_image()}}">
-						</div>
-					</div>
 					<div class="year_info">
 						<div class="yi_name">Year {{self.cyear.index+1}}, {{self.cseason.name}}</div>
-						<div class="yi_farmtype">{{self.cmode}}</div>
 					</div>
 				</div>
 				
@@ -133,10 +127,6 @@
 							<div class="date">
 								<span class="visible-xs">{{self.get_date(date, '%j%S - %l')}}</span>
 								<span class="hidden-xs">{{date%self.SEASON_DAYS>0 && date%self.SEASON_DAYS || self.SEASON_DAYS}}</span>
-							</div>
-							<div class="event" ng-show="self.events[date] && self.player.settings.show_events" title="{{self.events[date].get_text()}}">
-								<img ng-src="{{self.events[date].get_image()}}">
-								<span>{{self.events[date].get_text()}}</span>
 							</div>
 						</div>
 						
@@ -309,48 +299,11 @@
 					<h3 class="panel-title">Settings</h3>
 				</div>
 				<div class="panel-body">
-					<div class="farm_level">
-						<h4>Farming Level</h4>
-						<label><input type="number" ng-model="self.player.level" min="0" max="10" class="form-control"></label>
-						
-						<span>Base crop quality chances</span>
-						<div class="chance_scale">
-							<div class="regular" ng-style="{width: self.player.quality_chance(0, 0, true)+'%'}">
-								<div class="percent">{{self.player.quality_chance(0, 0, true)}}%</div>
-								<div class="name">Regular</div>
-							</div>
-							<div class="silver" ng-style="{width: self.player.quality_chance(1, 0, true)+'%'}">
-								<div class="percent">{{self.player.quality_chance(1, 0, true)}}%</div>
-								<div class="name">Silver</div>
-							</div>
-							<div class="gold" ng-style="{width: self.player.quality_chance(2, 0, true)+'%'}">
-								<div class="percent">{{self.player.quality_chance(2, 0, true)}}%</div>
-								<div class="name">Gold</div>
-							</div>
-						</div>
-					</div>
-					
-					<hr>
-					
-					<div class="farm_professions">
-						<h4>Farming Professions</h4>
-						<div class="btn" ng-class="{'btn-success': self.player.tiller, 'btn-default': !self.player.tiller}" ng-click="self.player.toggle_perk('tiller')" data-toggle="tooltip" title="Crops worth 10% more">
-							<i class="fa fa-tint"></i> Tiller
-						</div>
-						
-						<div class="btn" ng-class="{'btn-success': self.player.agriculturist, 'btn-default': !self.player.agriculturist}" ng-click="self.player.toggle_perk('agriculturist')" data-toggle="tooltip" title="All crops grow 10% faster">
-							<i class="fa fa-pagelines"></i> Agriculturist
-						</div>
-					</div>
-					
+
 					<hr>
 					
 					<div>
 						<h4>Miscellaneous</h4>
-						<label><input type="checkbox" ng-model="self.player.settings.show_events"> Show events on calendar</label>
-						
-						<br><br>
-						
 						<div class="btn btn-default" ng-click="self.clear_all()"><i class="fa fa-trash"></i> Clear Planner</div>
 					</div>
 					
@@ -359,15 +312,6 @@
 					<h4>Importing & Exporting</h4>
 					<div class="btn btn-default" ng-click="self.sidebar.import_data()"><i class="fa fa-sign-in"></i> Import</div>
 					<div class="btn btn-default" ng-click="self.sidebar.export_data()"><i class="fa fa-sign-out"></i> Export</div>
-					<br>
-					<br>
-					<div class="btn btn-default" ng-click="self.sidebar.legacy_import_data()"><i class="fa fa-repeat"></i> Import Planner v1 Data</div>
-					
-					
-					<hr>
-					
-					<a class="btn btn-primary" href="http://stardewvalleywiki.com/Stardew_Valley_Wiki" target="_blank" rel="noreferrer"><i class="fa fa-book"></i> Stardew Valley Wiki</a>
-					<a class="btn btn-primary" href="./v1/" target="_blank"><i class="fa fa-code-fork"></i> Crop Planner v1</a>
 				</div>
 			</div>
 			<!-- [/SB_SETTINGS] -->

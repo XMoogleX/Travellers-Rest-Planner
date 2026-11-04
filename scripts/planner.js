@@ -40,7 +40,6 @@ function planner_controller($scope){
 	self.config = {};
 	self.loaded = false;
 	self.sidebar;
-	self.player;
 	self.planner_modal;
 	
 	// Static planner data
@@ -57,7 +56,6 @@ function planner_controller($scope){
 	
 	self.cdate;							// Current date to add plan to
 	self.cseason;						// Current season
-	self.cmode = "farm";				// Current farm mode (farm / greenhouse)
 	self.cyear;							// Current year
 	
 	self.newplan;
@@ -78,9 +76,6 @@ function planner_controller($scope){
 	self.inc_season = inc_season;		// Increment/decrement current season
 	self.set_season = set_season;		// Set current season
 	self.cfarm = cfarm;					// Get current farm
-	self.in_greenhouse = in_greenhouse; // Check if current farm mode == greenhouse
-	self.toggle_mode = toggle_mode;		// Toggle current farm mode (farm / greenhouse)
-	self.set_mode = set_mode;			// Set current farm mode (farm / greenhouse)
 	
 	self.get_season = get_season;		// Get season object by id
 	self.get_date = get_date;			// Get formatted date string
@@ -106,7 +101,6 @@ function planner_controller($scope){
 	function init(){
 		// Initialize planner variables
 		self.sidebar = new Sidebar;
-		self.player = new Player;
 		self.planner_modal  = $("#crop_planner");
 		
 		for (var i = 0; i < self.days.length; i++) self.days[i] = i + 1;
@@ -198,7 +192,6 @@ function planner_controller($scope){
 				
 				// Update plans
 				update(self.years[0].data.farm, true); // Update farm
-				update(self.years[0].data.greenhouse, true); // Update greenhouse
 				
 				self.loaded = true;
 				$scope.$apply();
@@ -237,9 +230,6 @@ function planner_controller($scope){
 		} else if (e.which == 27){
 			// ESC
 			self.sidebar.open("cropinfo");
-		} else if (e.which == 192){
-			// Tilde
-			self.toggle_mode();
 		} else {
 			event_handled = false;
 		}
@@ -298,13 +288,11 @@ function planner_controller($scope){
 		// Reset all farms before calculating harvests
 		for (var i = start_year; i < self.years.length; i++) {
 			reset_farm(self.years[i].data.farm);
-			reset_farm(self.years[i].data.greenhouse);
 		}
 
 		// Calculate each year's farms
 		for (var i = start_year; i < self.years.length; i++) {
 			update_farm(self.years[i].data.farm);
-			update_farm(self.years[i].data.greenhouse);
 		}
 	}
 	function reset_farm(farm) {
@@ -407,9 +395,7 @@ function planner_controller($scope){
 					if (!harvest_year) continue;
 
 					// Select the matching farm
-					var target_farm = farm.greenhouse
-						? harvest_year.data.greenhouse
-						: harvest_year.data.farm;
+					var target_farm = harvest_year.data.farm;
 
 					// Update harvests in the destination year
 					if (!target_farm.harvests[harvest.date]) {
@@ -607,25 +593,6 @@ function planner_controller($scope){
 		return self.cyear.farm();
 	}
 	
-	// Check if current farm mode is greenhouse
-	function in_greenhouse(){
-		return self.cmode == "greenhouse";
-	}
-	
-	// Toggle current farm mode
-	function toggle_mode(){
-		if (self.cmode == "farm"){
-			set_mode("greenhouse");
-		} else {
-			set_mode("farm");
-		}
-	}
-	
-	// Set current farm mode
-	function set_mode(mode){
-		self.cmode = mode;
-	}
-	
 	////////////////////////////////
 	
 	// Get season object by id name or date
@@ -681,7 +648,7 @@ function planner_controller($scope){
 	
 	// Filter crops that can be planted in the planner's drop down list
 	function planner_valid_crops(crop){
-		return crop.can_grow(self.cseason, true) || self.in_greenhouse();
+		return crop.can_grow(self.cseason, true);
 	}
 	
 	
@@ -704,7 +671,6 @@ function planner_controller($scope){
 		self.back = back;
 		self.export_data = export_data;
 		self.import_data = import_data;
-		self.legacy_import_data = legacy_import_data;
 		
 		function keydown(e){
 			// Sidebar must be open
@@ -742,7 +708,6 @@ function planner_controller($scope){
 			if (!view){
 				self.crop = null;
 				planner.cinfo_settings.search = "";
-				planner.player.save();
 				planner.update(null, true);
 			} else {
 				// Set certain properties on open
@@ -830,143 +795,12 @@ function planner_controller($scope){
 				var plan_count = load_data();
 				//planner.player.load();
 				update(planner.years[0].data.farm, true); // Update farm
-				update(planner.years[0].data.greenhouse, true); // Update greenhouse
 				$scope.$apply();
 				alert("Successfully imported " + plan_count + " plans into " + planner.years.length + " year(s).");
 				console.log("Imported " + plan_count + " plans into " + planner.years.length + " year(s).");
 			};
 			
 			reader.readAsText(file);
-		}
-		
-		function legacy_import_data(){
-			if (!confirm("This will attempt to import planner data from the old v1 planner, and will overwrite any current plans. This change is not reversible and is not guaranteed to always work. Continue?")) return;
-			
-			// Load old v1 planner data
-			var plan_data = localStorage.getItem("crops");
-			if (!plan_data){ alert("No plan data to import"); return; }
-			plan_data = JSON.parse(plan_data);
-			if (!plan_data){ alert("No plan data to import"); return; }
-			
-			// Create new plan data
-			var new_plans = [{"farm":{}, "greenhouse":{}}];
-			$.each(plan_data, function(date, plans){
-				date = parseInt(date);
-				$.each(plans, function(i, plan){
-					plan.date = date;
-					if (!planner.crops[plan.crop]) return; // Invalid crop
-					
-					if (plan.greenhouse){
-						if (!new_plans[0].greenhouse[date]) new_plans[0].greenhouse[date] = [];
-						delete plan.greenhouse;
-						new_plans[0].greenhouse[date].push(plan);
-					} else {
-						if (!new_plans[0].farm[date]) new_plans[0].farm[date] = [];
-						new_plans[0].farm[date].push(plan);
-					}
-					
-					plan_count++;
-				});
-			});
-			
-			// Save data
-			SAVE_JSON("plans", new_plans);
-			
-			// Reload data and update
-			var plan_count = load_data();
-			update(planner.years[0].data.farm, true); // Update farm
-			update(planner.years[0].data.greenhouse, true); // Update greenhouse
-			alert("Successfully imported " + plan_count + " legacy plans into " + planner.years.length + " year(s).");
-			console.log("Imported " + plan_count + " legacy plans into " + planner.years.length + " year(s).");
-		}
-	}
-	
-	
-	/****************
-		Player class - user-set player configs [single instance]
-	****************/
-	function Player(){
-		var self = this;
-		self.level = 0; // farming level; starts at 0
-		self.tiller = false;
-		self.agriculturist = false;
-		
-		self.load = load
-		self.save = save;
-		self.toggle_perk = toggle_perk;
-		self.quality_chance = quality_chance;
-		
-		// Miscellaneous client settings
-		self.settings = {
-			show_events: true,
-		};
-		
-		
-		init();
-		
-		
-		function init(){
-			load();
-			console.log("Loaded player settings");
-		}
-		
-		// Load player config from browser storage
-		function load(){
-			var pdata = LOAD_JSON("player");
-			if (!pdata) return;
-			
-			if (pdata.tiller) self.tiller = true;
-			if (pdata.agriculturist) self.agriculturist = true;
-			if (pdata.level) self.level = pdata.level;
-			if (pdata.settings) self.settings = pdata.settings;
-		}
-		
-		// Save player config to browser storage
-		function save(){
-			var pdata = {};
-			if (self.tiller) pdata.tiller = self.tiller;
-			if (self.agriculturist) pdata.agriculturist = self.agriculturist;
-			pdata.settings = self.settings;
-			pdata.level = self.level;
-			SAVE_JSON("player", pdata);
-		}
-		
-		// Toggle profession perks
-		function toggle_perk(key){
-			self[key] = !self[key];
-			
-			// Must have Tiller to have Agriculturist
-			if (!self.tiller && key == "tiller"){
-				self.agriculturist = false;
-			} else if (self.agriculturist && key == "agriculturist"){
-				self.tiller = true;
-			}
-		}
-		
-		// Get scalar value of chance of crop being 0=regular; 1=silver; 2=gold quality
-		// [SOURCE: StardewValley/Crop.cs : function harvest]
-		function quality_chance(quality, mult, locale){
-			quality = quality || 0;		// Default: check regular quality chance
-			mult = mult || 0;			// Multiplier given by type of fertilizer used (0, 1, or 2)
-			
-			var gold_chance = 0.2 * (self.level / 10) + 0.2 * mult * ((self.level + 2) / 12) + 0.01;
-			var silver_chance = Math.min(0.75, gold_chance * 2);
-			
-			var chance = 0;
-			switch (quality){
-				case 0:
-					chance = Math.max(0, 1 - (gold_chance + silver_chance));
-					break;
-				case 1:
-					chance = Math.min(1, silver_chance);
-					break;
-				case 2:
-					chance = Math.min(1, gold_chance);
-					break;
-			}
-			
-			if (locale) return Math.round(chance * 100);
-			return chance;
 		}
 	}
 	
@@ -1133,13 +967,12 @@ function planner_controller($scope){
 			self.end = self.start + YEAR_DAYS - 1;
 			
 			self.data.farm = new Farm(self);
-			self.data.greenhouse = new Farm(self, true);
 		}
 	}
 	
-	// Return current Farm object based on planner mode
-	Year.prototype.farm = function(){
-		return this.data[planner.cmode];
+	// Return the Farm object for this year
+	Year.prototype.farm = function () {
+		return this.data.farm;
 	};
 	
 	// Returns next year
@@ -1190,24 +1023,24 @@ function planner_controller($scope){
 	};
 	
 	// Load data into year (from loading)
-	Year.prototype.set_data = function(l_data){
+	Year.prototype.set_data = function (l_data) {
 		var self = this;
 		var plan_count = 0;
-		
-		$.each(l_data, function(type, plan_data){
-			$.each(plan_data, function(date, plans){
-				date = parseInt(date);
-				
-				$.each(plans, function(i, plan){
-					plan.date = date;
-					if (!planner.crops[plan.crop]) return; // Invalid crop
-					var plan_object = new Plan(plan, type == "greenhouse");
-					self.data[type].plans[date].push(plan_object);
-					plan_count++;
-				});
+
+		// Load plans from the farm
+		$.each(l_data.farm, function (date, plans) {
+			date = parseInt(date);
+
+			$.each(plans, function (i, plan) {
+				plan.date = date;
+				if (!planner.crops[plan.crop]) return; // Invalid crop
+
+				var plan_object = new Plan(plan);
+				self.data.farm.plans[date].push(plan_object);
+				plan_count++;
 			});
 		});
-		
+
 		return plan_count;
 	};
 	
@@ -1221,7 +1054,7 @@ function planner_controller($scope){
 		
 		// Check that crop can grow
 		var crop = planner.crops[newplan.crop_id];
-		if (!crop || !crop.can_grow(date, false, planner.in_greenhouse())) return false;
+		if (!crop || !crop.can_grow(date, false)) return false;
 		newplan.crop = crop;
 		
 		// Amount to plant
@@ -1229,7 +1062,7 @@ function planner_controller($scope){
 		if (newplan.amount <= 0) return false;
 		
 		// Add plan
-		var plan = new Plan(newplan.get_data(), planner.in_greenhouse());
+		var plan = new Plan(newplan.get_data());
 		plan.date = date;
 		this.farm().plans[date].push(plan);
 		
@@ -1237,7 +1070,7 @@ function planner_controller($scope){
 		var crop_growth = plan.get_grow_time();
 		var next_planting = date + crop_growth;
 		var next_grow = next_planting + crop_growth;
-		if (!auto_replant || crop.regrow || (auto_replant && !crop.can_grow(next_grow, false, planner.in_greenhouse()))){
+		if (!auto_replant || crop.regrow || (auto_replant && !crop.can_grow(next_grow, false))){
 			// Update
 			update(this);
 			save_data();
@@ -1261,24 +1094,20 @@ function planner_controller($scope){
 	/****************
 		Farm class - used only within Year
 	****************/
-	function Farm(parent_year, is_greenhouse){
+	function Farm(parent_year) {
 		var self = this;
 		self.year;
-		self.greenhouse = false;
 		self.plans = {};
 		self.harvests = {};
 		self.totals = {};
-		
-		
+
 		init();
-		
-		
-		function init(){
+
+		function init() {
 			self.year = parent_year;
-			self.greenhouse = is_greenhouse;
-			
-			for (var i = 0; i < YEAR_DAYS; i++){
-				self.plans[i+1] = [];
+
+			for (var i = 0; i < YEAR_DAYS; i++) {
+				self.plans[i + 1] = [];
 			}
 			self.totals.season = [new Finance, new Finance, new Finance, new Finance];
 		}
@@ -1302,12 +1131,6 @@ function planner_controller($scope){
 			}
 		}
 		return false;
-	};
-	
-	// Get image representing farm type
-	Farm.prototype.get_image = function(){
-		var type = this.greenhouse ? "greenhouse" : "scarecrow";
-		return "images/" + type + ".png";
 	};
 	
 	/****************
@@ -1368,19 +1191,16 @@ function planner_controller($scope){
 	/****************
 		Plan class - represents seeds planted on a date
 	****************/
-	function Plan(data, in_greenhouse){
+	function Plan(data){
 		var self = this;
 		self.date;
 		self.crop_id;
 		self.crop = {};
 		self.amount = 1;
 		self.fertilizer = planner.fertilizer["none"];
-		self.harvests = [];
-		self.greenhouse = false;
+		self.harvests = [];		
 		
-		
-		init();
-		
+		init();		
 		
 		function init(){
 			if (!data) return;
@@ -1389,7 +1209,6 @@ function planner_controller($scope){
 			self.amount = data.amount;
 			if (data.fertilizer && planner.fertilizer[data.fertilizer])
 				self.fertilizer = planner.fertilizer[data.fertilizer];
-			self.greenhouse = in_greenhouse ? true : false;
 		}
 	}
 	
