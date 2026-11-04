@@ -1,89 +1,73 @@
-# Stardew Valley Crop Planner
+Travellers Rest Crop Planner
 
-A tool for planning crop schedules in the Stardew Valley game.
+A crop planning tool for Travellers Rest, adapted from exnil's Stardew Valley Crop Planner.
 
-#### **<a href="http://exnil.github.io/crop_planner/">Live version on github.io</a>**
+Status: Work in Progress
 
-<a href="https://www.reddit.com/r/StardewValley/comments/55puw1/crop_planner_v2_released_multiple_years_importing/" target="_blank">Reddit thread</a>
+This project aims to help players organize their farms, plan crop rotations, and estimate harvest quantities throughout multiple seasons and years.
 
----
+Current Features
 
-### New in v2
+- Interactive crop planting calendar
+- Four seasons with 28 days each
+- Crop growth and regrowth calculations
+- Seasonal planting restrictions
+- Multi-season and multi-year crop planning
+- Harvest quantity tracking
+- Automatic replanting support
+- Seasonal and yearly summaries
+- Browser-based saving
+- Import and export functionality
 
-* Multiple year planning
-* Import/export plans
-* Import existing plans from the old v1 planner
- * (only works if old plans are on the same browser)
-* Greenhouse plans separated from outdoor Farm plans
-* Improved planner design
-* Slightly improved responsive design for mobile devices
-* Crop info and Settings moved to pop-out sidebar
-* Improved Crop Info panel
-* More settings
-* More seasonal statistics
-* A few keyboard shortcuts:
- * Left/Right arrows = navigate seasons
- * ESC = open/close sidebar (opens to crop info)
- * ~ (tilde) = toggle between outdoor farm/greenhouse
+Planned Features
 
-I'll be leaving <a href="http://exnil.github.io/crop_planner/v1/" target="_blank">v1 of the planner</a> up for anyone who's interested in accessing it, though I won't be updating it any further so it will only ever be up to date with Stardew Valley v1.07.
+- Skill Tree bonuses
+- Spell-related harvest bonuses
+- Seasonal bonus yield calculations
+- Arcane crops and fertilizer requirements
+- Updated crop information interface
+- Improved crop data accuracy
+- Additional interface improvements
 
----
+Known Limitations
 
-### Crop Info
-Crop info is stored in config.json. This data is retrieved from game files in *[install dir]/Content/Data/*, specifically Crops.xnb and ObjectInformation.xnb. I use <a href="https://github.com/Draivin/XNBNode" target="_blank">XNBNode by Draivin</a> to decompress these files and parse them with a Python script to save into the config.json file.
+This project is actively being converted from a Stardew Valley planner.
 
----
+Some interface elements and calculations may still reflect the original planner.
 
-### Development Utilities
-If you are interested in contributing to the Crop Planner, I have included some Python utility scripts that I use in my development workflow. These are located in *./utils/*, and require Python 3 to run. Each script has its own dependencies:
+Newer Travellers Rest mechanics, particularly Arcane fertilizer and seasonal harvest bonuses, are not yet fully documented or implemented.
 
-* <b>update-config.py</b> - Updates crop data in config.json using data from decompiled game files
- * Dependencies:
- * Stardew Valley
- * <a href="https://github.com/Draivin/XNBNode" target="_blank">XNBNode</a>
- * xcompress32.dll (proprietary dll required by XNBNode, place in XNBNode folder)
-* <b>watch-less.py</b> - Watches style.less for changes and recompiles CSS using Less CSS
- * Dependencies:
- * less (Less CSS)
- * less-plugin-clean-css (for minifying the resulting CSS)
- * <a href="http://lesscss.org/usage/#command-line-usage" target="_blank">Install with npm</a>
+Crop yield calculations currently use base yields without unverified bonuses.
 
----
+Community Feedback and Contributions
 
-### Item Prices
-All items have a **base price** which the game uses to calculate the sell price (when you ship items) and buy price (when you buy items from stores) of that item. Buy price is simply <code>Base Price * 2</code>.
+Feedback and contributions are welcome!
 
-The calculation for sell price of an item (without added Profession bonuses) is below. The Quality of an item is used numerically as a multiplier: 0 for regular; 1 for silver; 2 for gold.
-<pre>
-(int) Sell Price = Base Price * (1 + (Quality * 0.25))
-</pre>
+I'm particularly interested in help with:
 
-*Note: some items have sell/buy prices that deviate from the above formulas. These prices are likely hard-coded into the game.*
+- Verifying crop growth times and regrowth intervals
+- Confirming crop yields and seasonal availability
+- Understanding Arcane fertilizer mechanics
+- Determining seasonal bonus probabilities
+- Identifying bugs or incorrect calculations
+- Suggestions for improving the planner
 
----
+If you find an issue or have reliable game data, please open a GitHub Issue.
 
-### Profit-per-day
-Crop profits-per-day are calculated using the <b><i>minimum sell price</i></b> of a crop.<br>
-Profit per day: <code>((Total Yields * Sells For) - (Seed Price * Total Plantings)) / (Final Harvest Date - 1)</code>
+Credits and Attribution
 
-<b>Example 1 - Parsnip</b><br>
-Parsnips take 4 days to grow after the day they are planted. In Spring, they can be planted 6 times and yield a total of 6 Parsnips, assuming replanting occurs on the same day of harvesting. The last harvest occurs on Day 25. Seeds cost 20g, and Parsnips sell for a minimum of 35g.
-<pre>
-((6 * 35g) - (20g * 6)) / (25 - 1)
-90g / 24
-<b>= 3.75g/day</b>
-</pre>
+This project is based on the Stardew Valley Crop Planner, originally created by exnil.
 
+Original project: https://github.com/exnil/crop_planner
 
-<b>Example 2 - Corn</b><br>
-Corn takes 14 days to grow after the day it is planted. In Spring and Fall, it is planted once and can yield a total of 11 Corn. The last harvest occurs on Day 55. Seeds cost 150g, and Corn sells for a minimum of 50g.
-<pre>
-((11 * 50g) - (150g * 1)) / (55 - 1)
-400g / 54
-<b>= 7.4g/day</b>
-</pre>
+Original software copyright © 2016 exnil.
 
----
+The original planner provided the foundation for the calendar interface and crop-planning system. This adaptation modifies that foundation to support Travellers Rest.
 
-<i>All copyrighted content (images, textures, etc.) belong to their respective owners (ConcernedApe / Stardew Valley) and are not included under the MIT license of this project.</i>
+License
+
+This project retains the original MIT License and copyright notice.
+
+See the "LICENSE" file for the full license text.
+
+Game-related names, images, and other assets remain the property of their respective owners.
