@@ -1,12 +1,12 @@
-Travellers Rest Crop Planner
+# Travellers Rest Crop Planner
 
-A crop planning tool for Travellers Rest, adapted from exnil's Stardew Valley Crop Planner.
+A crop planning tool for *Travellers Rest*, adapted from **exnil's Stardew Valley Crop Planner**.
 
-Status: Work in Progress
+**Status: Work in Progress**
 
 This project aims to help players organize their farms, plan crop rotations, and estimate harvest quantities throughout multiple seasons and years.
 
-Current Features
+## Current Features
 
 - Interactive crop planting calendar
 - Four seasons with 28 days each
@@ -15,12 +15,13 @@ Current Features
 - Multi-season and multi-year crop planning
 - Harvest quantity tracking
 - Automatic replanting support
-- Seasonal and yearly summaries
+- Seasonal summary
 - Browser-based saving
 - Import and export functionality
 
-Planned Features
+## Planned Features
 
+- Yearly summary
 - Skill Tree bonuses
 - Spell-related harvest bonuses
 - Seasonal bonus yield calculations
@@ -29,17 +30,17 @@ Planned Features
 - Improved crop data accuracy
 - Additional interface improvements
 
-Known Limitations
+## Known Limitations
 
-This project is actively being converted from a Stardew Valley planner.
+This project is actively being converted from a Stardew Valley crop planner.
 
 Some interface elements and calculations may still reflect the original planner.
 
-Newer Travellers Rest mechanics, particularly Arcane fertilizer and seasonal harvest bonuses, are not yet fully documented or implemented.
+Newer *Travellers Rest* mechanics, particularly Arcane fertilizer and seasonal harvest bonuses, are not yet fully documented or implemented.
 
 Crop yield calculations currently use base yields without unverified bonuses.
 
-Community Feedback and Contributions
+## Community Feedback and Contributions
 
 Feedback and contributions are welcome!
 
@@ -54,9 +55,9 @@ I'm particularly interested in help with:
 
 If you find an issue or have reliable game data, please open a GitHub Issue.
 
-Credits and Attribution
+## Credits and Attribution
 
-This project is based on the Stardew Valley Crop Planner, originally created by exnil.
+This project is based on the **Stardew Valley Crop Planner, originally created by exnil.
 
 Original project: https://github.com/exnil/crop_planner
 
@@ -64,7 +65,7 @@ Original software copyright © 2016 exnil.
 
 The original planner provided the foundation for the calendar interface and crop-planning system. This adaptation modifies that foundation to support Travellers Rest.
 
-License
+## License
 
 This project retains the original MIT License and copyright notice.
 
