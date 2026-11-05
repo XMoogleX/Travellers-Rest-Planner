@@ -48,9 +48,14 @@ function planner_controller($scope){
 	self.SEASON_DAYS = SEASON_DAYS;		// Exposing SEASON_DAYS constant to app scope
 	self.crops_list = []; 				// [id, id, ...]
 	self.crops = {}; 					// {id: {data}}	
-	self.fertilizer = {}; 				// [fertilizer, fertilizer, ...]
-	self.events = {};					// Birthdays & festivals
-	
+	self.fertilizer = {
+		none: new Fertilizer({
+			id: "none",
+			name: "None",
+			buy: 0
+		})
+	};
+
 	// State objects & variables
 	self.years = [];
 	
@@ -156,24 +161,12 @@ function planner_controller($scope){
 				});
 				
 				// Process fertilizer data
-				$.each(self.config.fertilizer, function(i, fertilizer){
+                $.each(self.config.fertilizer || [], function (i, fertilizer) {
 					fertilizer = new Fertilizer(fertilizer);
 					self.config.fertilizer[i] = fertilizer;
 					self.fertilizer[fertilizer.id] = fertilizer;
 				});
-				
-				// Process events data
-				var s_index = 0;
-				$.each(self.config.events, function(season_name, season){
-					$.each(season, function(ii, c_event){
-						c_event.season = s_index;
-						c_event = new CalendarEvent(c_event);
-						self.events[c_event.date] = c_event;						
-					});
-					
-					s_index++;
-				});
-				
+							
 				// Create newplan template
 				self.newplan = new Plan;
 				
@@ -263,7 +256,11 @@ function planner_controller($scope){
 		self.years = [];
 		$.each(plan_data, function(i, year_data){
 			var new_year = new Year(i);
-			plan_count += new_year.set_data(year_data);
+
+			if (year_data && year_data.farm) {
+				plan_count += new_year.set_data(year_data);
+			}
+
 			self.years.push(new_year);
 		});
 		self.cyear = self.years[0];
@@ -1255,8 +1252,9 @@ function planner_controller($scope){
 		self.id;
 		self.name;
 		self.buy = 0;
-		self.quality = [0, 0, 0]; // for quality-modifying fertilizers
-		self.growth_rate = 0; // for growth-modifying fertilizers
+        self.required = false; // Whether fertilizer is required for a crop
+		self.growth_rate = 0; // Potential growth modifier
+        self.yield_bonus = 0; // Potential harvest yield modifier
 		
 		
 		init();
@@ -1267,8 +1265,9 @@ function planner_controller($scope){
 			self.id = data.id;
 			self.name = data.name;
 			self.buy = data.buy;
-			if (data.quality) self.quality = data.quality;
-			if (data.growth_rate) self.growth_rate = data.growth_rate;
+			if (data.required !== undefined) self.required = data.required;
+			if (data.growth_rate !== undefined) self.growth_rate = data.growth_rate;
+			if (data.yield_bonus !== undefined) self.yield_bonus = data.yield_bonus;
 		}
 	}
 	
@@ -1329,46 +1328,7 @@ function planner_controller($scope){
 		return value;
 	};
 	
-	
-	/****************
-		Calendar Event class - event on the calendar
-	****************/
-	function CalendarEvent(data){
-		var self = this;
-		self.day;
-		self.season;
 		
-		self.date;
-		self.name = "";
-		self.festival = false;
-		
-		
-		init();
-		
-		
-		function init(){
-			if (!data) return;
-			self.day = data.day;
-			self.season = planner.seasons[data.season];
-			
-			self.date = (data.season * SEASON_DAYS) + self.day;
-			self.name = data.name;
-			self.festival = data.festival;
-		}
-	}
-	
-	// Get event image
-	CalendarEvent.prototype.get_image = function(){
-		if (this.festival) return "images/flag.gif";
-		return "images/people/" + this.name.toLowerCase() + ".png";
-	};
-	
-	// Get readable text of event
-	CalendarEvent.prototype.get_text = function(){
-		if (!this.festival) return this.name + "'s Birthday";
-		return this.name;
-	};
-	
 	
 	/********************************
 		RUN INITIALIZATION
