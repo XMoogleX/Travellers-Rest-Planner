@@ -1,6 +1,6 @@
 # Travellers Rest Crop Planner
 
-A crop planning tool for *Travellers Rest*, adapted from **exnil's Stardew Valley Crop Planner**.
+A crop planning tool for *Travellers Rest*, adapted from **exnil's** *Crop Planner* for *Stardew Valley*.
 
 **Status: Work in Progress**
 
@@ -57,13 +57,13 @@ If you find an issue or have reliable game data, please open a GitHub Issue.
 
 ## Credits and Attribution
 
-This project is based on the **Stardew Valley Crop Planner, originally created by exnil.
+This project is an adaptation of *Crop Planner*, originally developed by **exnil** for *Stardew Valley*.
 
 Original project: https://github.com/exnil/crop_planner
 
 Original software copyright © 2016 exnil.
 
-The original planner provided the foundation for the calendar interface and crop-planning system. This adaptation modifies that foundation to support Travellers Rest.
+The original *Crop Planner* provided the foundation for the calendar interface and crop-planning system. This adaptation modifies that foundation to support *Travellers Rest*.
 
 ## License
 
