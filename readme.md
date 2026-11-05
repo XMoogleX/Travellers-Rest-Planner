@@ -19,6 +19,38 @@ This project aims to help players organize their farms, plan crop rotations, and
 - Browser-based saving
 - Import and export functionality
 
+## Running the Planner Locally
+
+The *Travellers Rest Crop Planner* is currently in development and can be run locally using Python's built-in HTTP server.
+
+### Requirements
+- Python 3 installed on your computer
+- A modern web browser
+
+### Instructions
+
+1. Download or clone this repository.
+2. Open Command Prompt or a terminal in the project's root directory (the folder containing `index.html`).
+3. Start a local HTTP server by running:
+
+   `py -m http.server 8000`
+
+4. Open your web browser and navigate to:
+
+   **http://localhost:8000**
+
+5. The crop planner should now be accessible in your browser.
+
+### Stopping the Server
+
+Return to the terminal and press **Ctrl + C** to stop the local server.
+
+### Notes
+
+- This project is still under development, and some features may be incomplete or subject to change.
+- Your crop plans are saved locally in your browser using local storage.
+- Clearing your browser's site data may remove your saved plans.
+
 ## Planned Features
 
 - Yearly summary
