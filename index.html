@@ -44,14 +44,8 @@
 						<div class="btn btn-default" ng-click="self.inc_year(-1)"><i class="fa fa-chevron-left"></i></div>
 						<div class="btn btn-default" ng-click="self.inc_year(1)"><i class="fa fa-chevron-right"></i></div>
 					</div>
-					<div class="farm_picker">
-						<div class="btn btn-default" ng-click="self.toggle_mode()">
-							<img ng-src="{{self.cfarm().get_image()}}">
-						</div>
-					</div>
 					<div class="year_info">
 						<div class="yi_name">Year {{self.cyear.index+1}}, {{self.cseason.name}}</div>
-						<div class="yi_farmtype">{{self.cmode}}</div>
 					</div>
 				</div>
 				
@@ -134,10 +128,6 @@
 								<span class="visible-xs">{{self.get_date(date, '%j%S - %l')}}</span>
 								<span class="hidden-xs">{{date%self.SEASON_DAYS>0 && date%self.SEASON_DAYS || self.SEASON_DAYS}}</span>
 							</div>
-							<div class="event" ng-show="self.events[date] && self.player.settings.show_events" title="{{self.events[date].get_text()}}">
-								<img ng-src="{{self.events[date].get_image()}}">
-								<span>{{self.events[date].get_text()}}</span>
-							</div>
 						</div>
 						
 						<div ng-show="self.cfarm().plans[date].length" class="items">
@@ -217,15 +207,13 @@
 						</div>
 						
 						<div class="crops_container">
-							<label><input type="checkbox" ng-model="self.cinfo_settings.use_fbp"> Use Fixed Budget Profit</label>
 							<table class="table table-condensed crops">
 								<thead>
 									<tr>
 										<th ng-click="self.ci_set_sort('name')" colspan="2">Crop</th>
 										<th ng-click="self.ci_set_sort('grow')"><i class="fa fa-clock-o"></i> Days</th>
 										<th ng-click="self.ci_set_sort('buy')">Buy</th>
-										<th ng-click="self.ci_set_sort('sell')">Sell</th>
-										<th ng-click="self.ci_set_sort(self.cinfo_settings.use_fbp && 'fixed_profit' || 'profit')">g/day</th>
+										<th ng-click="self.ci_set_sort('sell')">Ingredient Value</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -233,15 +221,11 @@
 										<td width="1"><img ng-src="{{crop.get_image()}}"></td>
 										<td class="name">
 											{{crop.name}}
-											<span class="text-muted" ng-show="crop.harvest.min>1">(x{{crop.harvest.min}})</span>
+											<span class="text-muted" ng-show="crop.harvest.yield>1">(x{{crop.harvest.yield}})</span>
 										</td>
-										<td>{{crop.grow}}</td>
-										<td>{{crop.buy}}g</td>
-										<td>{{crop.get_sell()}}g</td>
-										<td>
-											<span ng-show="!self.cinfo_settings.use_fbp">{{crop.profit}}g</span>
-											<span ng-show="self.cinfo_settings.use_fbp">{{crop.fixed_profit}}g</span>
-										</td>
+										<td>{{crop.growTime}}</td>
+										<td>{{self.format_Currency(crop.buy)}}</td>
+										<td>{{self.format_Currency(crop.sell)}}</td>
 									</tr>
 								</tbody>
 							</table>
@@ -260,35 +244,23 @@
 						<table class="table table-condensed">
 							<tr>
 								<th><i class="fa fa-fw fa-clock-o"></i> Grows</th>
-								<td>{{self.sidebar.crop.grow}} days</td>
+								<td>{{self.sidebar.crop.growTime}} days</td>
 							</tr>
 							<tr ng-show="self.sidebar.crop.regrow">
 								<th><i class="fa fa-fw fa-refresh"></i> Regrows</th>
 								<td>{{self.sidebar.crop.regrow}} days</td>
 							</tr>
-							<tr ng-show="self.sidebar.crop.harvest.min>1">
+							<tr ng-show="self.sidebar.crop.yield > 1">
 								<th><i class="fa fa-cubes"></i> Yields</th>
-								<td>x{{self.sidebar.crop.harvest.min}}</td>
+								<td>x{{self.sidebar.crop.yield}}</td>
 							</tr>
-							<tr>
 								<th><i class="fa fa-fw fa-minus-square"></i> Buy</th>
-								<td>{{self.sidebar.crop.buy}}g</td>
+								<td>{{self.format_Currency(self.sidebar.crop.buy)}}</td>
 							</tr>
-							<tr>
-								<th><i class="fa fa-fw fa-plus-square"></i> Sell</th>
-								<td>{{self.sidebar.crop.get_sell()}}g</td>
-							</tr>
-							<tr>
-								<th><i class="fa fa-fw fa-bar-chart"></i> Profit/day</th>
-								<td>{{self.sidebar.crop.profit}}g</td>
-							</tr>
-							<tr>
-								<th>
-									<i class="fa fa-fw fa-line-chart"></i> Fixed Budget Profit/day
-									<sup><a title="Description of Fixed Budget Profit on Reddit" href="https://www.reddit.com/r/StardewValley/comments/55puw1/crop_planner_v2_released_multiple_years_importing/d93smm8/" target="_blank" rel="noreferrer">[?]</a></sup>
-								</th>
-								<td>{{self.sidebar.crop.fixed_profit}}g</td>
-							</tr>
+								<tr>
+									<th><i class="fa fa-fw fa-plus-square"></i> Ingredient Value</th>
+									<td>{{self.format_Currency(self.sidebar.crop.sell)}}</td>
+								</tr>
 							<tr ng-show="self.sidebar.crop.note">
 								<th><i class="fa fa-fw fa-exclamation-circle"></i> Note</th>
 								<td>{{self.sidebar.crop.note}}</td>
@@ -309,48 +281,11 @@
 					<h3 class="panel-title">Settings</h3>
 				</div>
 				<div class="panel-body">
-					<div class="farm_level">
-						<h4>Farming Level</h4>
-						<label><input type="number" ng-model="self.player.level" min="0" max="10" class="form-control"></label>
-						
-						<span>Base crop quality chances</span>
-						<div class="chance_scale">
-							<div class="regular" ng-style="{width: self.player.quality_chance(0, 0, true)+'%'}">
-								<div class="percent">{{self.player.quality_chance(0, 0, true)}}%</div>
-								<div class="name">Regular</div>
-							</div>
-							<div class="silver" ng-style="{width: self.player.quality_chance(1, 0, true)+'%'}">
-								<div class="percent">{{self.player.quality_chance(1, 0, true)}}%</div>
-								<div class="name">Silver</div>
-							</div>
-							<div class="gold" ng-style="{width: self.player.quality_chance(2, 0, true)+'%'}">
-								<div class="percent">{{self.player.quality_chance(2, 0, true)}}%</div>
-								<div class="name">Gold</div>
-							</div>
-						</div>
-					</div>
-					
-					<hr>
-					
-					<div class="farm_professions">
-						<h4>Farming Professions</h4>
-						<div class="btn" ng-class="{'btn-success': self.player.tiller, 'btn-default': !self.player.tiller}" ng-click="self.player.toggle_perk('tiller')" data-toggle="tooltip" title="Crops worth 10% more">
-							<i class="fa fa-tint"></i> Tiller
-						</div>
-						
-						<div class="btn" ng-class="{'btn-success': self.player.agriculturist, 'btn-default': !self.player.agriculturist}" ng-click="self.player.toggle_perk('agriculturist')" data-toggle="tooltip" title="All crops grow 10% faster">
-							<i class="fa fa-pagelines"></i> Agriculturist
-						</div>
-					</div>
-					
+
 					<hr>
 					
 					<div>
 						<h4>Miscellaneous</h4>
-						<label><input type="checkbox" ng-model="self.player.settings.show_events"> Show events on calendar</label>
-						
-						<br><br>
-						
 						<div class="btn btn-default" ng-click="self.clear_all()"><i class="fa fa-trash"></i> Clear Planner</div>
 					</div>
 					
@@ -359,15 +294,6 @@
 					<h4>Importing & Exporting</h4>
 					<div class="btn btn-default" ng-click="self.sidebar.import_data()"><i class="fa fa-sign-in"></i> Import</div>
 					<div class="btn btn-default" ng-click="self.sidebar.export_data()"><i class="fa fa-sign-out"></i> Export</div>
-					<br>
-					<br>
-					<div class="btn btn-default" ng-click="self.sidebar.legacy_import_data()"><i class="fa fa-repeat"></i> Import Planner v1 Data</div>
-					
-					
-					<hr>
-					
-					<a class="btn btn-primary" href="http://stardewvalleywiki.com/Stardew_Valley_Wiki" target="_blank" rel="noreferrer"><i class="fa fa-book"></i> Stardew Valley Wiki</a>
-					<a class="btn btn-primary" href="./v1/" target="_blank"><i class="fa fa-code-fork"></i> Crop Planner v1</a>
 				</div>
 			</div>
 			<!-- [/SB_SETTINGS] -->
@@ -392,7 +318,7 @@
 							<div class="col-md-4 col-xs-12">
 								<b>Plant Crop</b><br>
 								<select class="form-control" ng-model="self.newplan.crop_id"
-									ng-options="crop.id as crop.name for crop in self.crops_list | filter:self.planner_valid_crops">
+										ng-options="crop.id as crop.name for crop in self.crops_list | filter:self.planner_valid_crops">
 								</select>
 							</div>
 							<div class="col-md-2 col-xs-4">
@@ -401,7 +327,7 @@
 									<input class="form-control" type="text" ng-model="self.newplan.amount" ng-keypress="self.add_plan_key(self.cdate, $event)">
 								</label>
 							</div>
-							<div class="col-md-3 col-xs-4">
+							<div class="col-md-3 col-xs-4" ng-if="self.config.fertilizer && self.fertilizer.length">
 								<b>Fertilizer</b><br>
 								<select class="form-control" ng-model="self.newplan.fertilizer" ng-options="fert as fert.name for fert in self.config.fertilizer track by fert.id">
 								</select>
@@ -537,11 +463,11 @@
 	
 	<!-- [LICENSE] -->
 	<div class="license">
-		<a href="http://stardewvalley.net/" target="_blank" rel="noreferrer">Stardew Valley</a> (v1.1) © <a href="https://twitter.com/ConcernedApe" target="_blank" rel="noreferrer">ConcernedApe</a>. Unofficial <a href="https://github.com/exnil/crop_planner" target="_blank" rel="noreferrer">crop planner source code</a> made available under the MIT License. 
+		<a href="" target="_blank" rel="noreferrer">Travellers Rest</a> (v) © <a href="null" target="_blank" rel="noreferrer">null</a>. Unofficial <a href="" target="_blank" rel="noreferrer">crop planner source code</a> made available under the MIT License. 
 		<br>
-		<a href="https://github.com/exnil/crop_planner" target="_blank" rel="noreferrer" title="GitHub Page"><i class="fa fa-github fa-lg"></i></a>
+		<a href="" target="_blank" rel="noreferrer" title="GitHub Page"><i class="fa fa-github fa-lg"></i></a>
 		&ensp;
-		<a href="https://www.reddit.com/r/StardewValley/comments/55puw1/crop_planner_v2_released_multiple_years_importing/" target="_blank" rel="noreferrer" title="Reddit Thread"><i class="fa fa-reddit-alien fa-lg"></i></a>
+		<a href="" target="_blank" rel="noreferrer" title="Reddit Thread"><i class="fa fa-reddit-alien fa-lg"></i></a>
 	</div>
 	<!-- [/LICENSE] -->
 </body>
