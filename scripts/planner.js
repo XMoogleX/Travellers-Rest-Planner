@@ -1,8 +1,8 @@
 // CONSTANTS
 var SEASON_DAYS = 28;
 var YEAR_DAYS = SEASON_DAYS * 4;
-var VERSION = "2.0";
-var DATA_VERSION = "2";
+var VERSION = "0.1.0";
+var DATA_VERSION = "tr1";
 
 
 // Save/load helper functions
@@ -24,6 +24,25 @@ function round(num, decimals){
 	return Math.round(num * decimals) / decimals;
 }
 
+// Format Travellers Rest Currency (Gold,Silver, and Copper)
+function format_Currency(value) {
+    var copper = Math.round(Number(value) || 0);
+	var sign = copper < 0 ? "-" : "";
+	copper = Math.abs(copper);
+	var silver = Math.floor(copper / 100);
+	copper %= 100;
+	var gold = Math.floor(silver / 100);
+	silver %= 100;
+
+	var parts = [];
+
+	if (gold > 0) parts.push(gold + "g");
+	if (silver > 0) parts.push(silver + "s");
+	if (copper > 0 || parts.length === 0) {
+		parts.push(copper + "c");
+	}
+	return sign + parts.join(" ");
+}
 
 // Angular app
 angular.module("planner_app", ["checklist-model"])
@@ -86,17 +105,16 @@ function planner_controller($scope){
 	self.get_date = get_date;			// Get formatted date string
 	self.ci_set_sort = ci_set_sort;		// Set key to sort crop info by
 	self.planner_valid_crops = planner_valid_crops;
+	self.format_Currency = format_Currency;
 	
 	// Crop info search/filter settings
 	self.cinfo_settings = {
-		season: "spring",
 		seasons: ["spring"],
 		season_options: [],
 		sort: "name",
 		search: "",
 		regrows: false,
 		order: false,
-		use_fbp: false,
 	};
 	
 	
@@ -111,7 +129,7 @@ function planner_controller($scope){
 		for (var i = 0; i < self.days.length; i++) self.days[i] = i + 1;
 		self.seasons = [new Season(0), new Season(1), new Season(2), new Season(3)];
 		self.cseason = self.seasons[0];
-		self.cinfo_settings.season_options = [self.seasons[0], self.seasons[1], self.seasons[2]];
+		self.cinfo_settings.season_options = [self.seasons[0], self.seasons[1], self.seasons[2], self.seasons[3]];
 		
 		// Enable bootstrap tooltips
 		$("body").tooltip({selector: "[data-toggle=tooltip]", trigger: "hover", container: "body"});
@@ -156,9 +174,13 @@ function planner_controller($scope){
 				// Process crop data
 				$.each(self.config.crops, function(i, crop){
 					crop = new Crop(crop);
+
+					if (crop.id === "aroma_hops") {
+						console.log("Aroma Hops growth time:", crop.growTime);
+					}
+
 					self.crops_list.push(crop);
-					self.crops[crop.id] = crop;
-				});
+					self.crops[crop.id] = crop;				});
 				
 				// Process fertilizer data
                 $.each(self.config.fertilizer || [], function (i, fertilizer) {
@@ -732,13 +754,9 @@ function planner_controller($scope){
 		}
 		
 		function export_data(){
-			// Save player
-			//planner.player.save();
-			
 			// Export data
 			var out_data = {};
 			out_data.plans = LOAD_JSON("plans");
-			//out_data.player = LOAD_JSON("player");
 			out_data.version = DATA_VERSION;
 			
 			var blob = new Blob([JSON.stringify(out_data)], {type: "octet/stream"});
@@ -747,7 +765,7 @@ function planner_controller($scope){
 			var link = document.createElement("a");
 			link.href = blob_url;
 			link.style = "display: none";
-			link.download = "Crop Planner [" + Date.now() + "]" + ".json";
+			link.download = "Traveller Rest Crop Planner [" + Date.now() + "].json";
 			document.body.appendChild(link);
 			link.click();
 		}
@@ -775,7 +793,6 @@ function planner_controller($scope){
 					return;
 				}
 				
-				//if (!data.plans || !data.player){
 				if (!data.plans){
 					alert("Invalid data to import.")
 					return;
@@ -891,14 +908,7 @@ function planner_controller($scope){
 
 		}
 	}
-	
-	// Get crop quality-modified sell price
-	// [SOURCE: StardewValley/Object.cs : function sellToStorePrice]
-	Crop.prototype.get_sell = function(quality){
-		quality = quality || 0;
-		return Math.floor(this.sell * (1 + (quality * 0.25)));
-	};
-	
+		
 	// Check if crop can grow on date/season
 	Crop.prototype.can_grow = function(date, is_season){
 		var self = this;
@@ -931,7 +941,7 @@ function planner_controller($scope){
 			fragment[i] = fragment[i].charAt(0).toUpperCase() + fragment[i].slice(1);
 		}
 		fragment = fragment.join("_");
-		return "http://stardewvalleywiki.com/Crops#"+fragment;
+		return "https://travellersrest.wiki.gg/wiki/"+fragment;
 	};
 	
 	// Get thumbnail image

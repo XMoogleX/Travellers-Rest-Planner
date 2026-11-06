@@ -207,15 +207,13 @@
 						</div>
 						
 						<div class="crops_container">
-							<label><input type="checkbox" ng-model="self.cinfo_settings.use_fbp"> Use Fixed Budget Profit</label>
 							<table class="table table-condensed crops">
 								<thead>
 									<tr>
 										<th ng-click="self.ci_set_sort('name')" colspan="2">Crop</th>
 										<th ng-click="self.ci_set_sort('grow')"><i class="fa fa-clock-o"></i> Days</th>
 										<th ng-click="self.ci_set_sort('buy')">Buy</th>
-										<th ng-click="self.ci_set_sort('sell')">Sell</th>
-										<th ng-click="self.ci_set_sort(self.cinfo_settings.use_fbp && 'fixed_profit' || 'profit')">g/day</th>
+										<th ng-click="self.ci_set_sort('sell')">Ingredient Value</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -223,15 +221,11 @@
 										<td width="1"><img ng-src="{{crop.get_image()}}"></td>
 										<td class="name">
 											{{crop.name}}
-											<span class="text-muted" ng-show="crop.harvest.min>1">(x{{crop.harvest.min}})</span>
+											<span class="text-muted" ng-show="crop.harvest.yield>1">(x{{crop.harvest.yield}})</span>
 										</td>
-										<td>{{crop.grow}}</td>
-										<td>{{crop.buy}}g</td>
-										<td>{{crop.get_sell()}}g</td>
-										<td>
-											<span ng-show="!self.cinfo_settings.use_fbp">{{crop.profit}}g</span>
-											<span ng-show="self.cinfo_settings.use_fbp">{{crop.fixed_profit}}g</span>
-										</td>
+										<td>{{crop.growTime}}</td>
+										<td>{{self.format_Currency(crop.buy)}}</td>
+										<td>{{self.format_Currency(crop.sell)}}</td>
 									</tr>
 								</tbody>
 							</table>
@@ -250,35 +244,23 @@
 						<table class="table table-condensed">
 							<tr>
 								<th><i class="fa fa-fw fa-clock-o"></i> Grows</th>
-								<td>{{self.sidebar.crop.grow}} days</td>
+								<td>{{self.sidebar.crop.growTime}} days</td>
 							</tr>
 							<tr ng-show="self.sidebar.crop.regrow">
 								<th><i class="fa fa-fw fa-refresh"></i> Regrows</th>
 								<td>{{self.sidebar.crop.regrow}} days</td>
 							</tr>
-							<tr ng-show="self.sidebar.crop.harvest.min>1">
+							<tr ng-show="self.sidebar.crop.yield > 1">
 								<th><i class="fa fa-cubes"></i> Yields</th>
-								<td>x{{self.sidebar.crop.harvest.min}}</td>
+								<td>x{{self.sidebar.crop.yield}}</td>
 							</tr>
-							<tr>
 								<th><i class="fa fa-fw fa-minus-square"></i> Buy</th>
-								<td>{{self.sidebar.crop.buy}}g</td>
+								<td>{{self.format_Currency(self.sidebar.crop.buy)}}</td>
 							</tr>
-							<tr>
-								<th><i class="fa fa-fw fa-plus-square"></i> Sell</th>
-								<td>{{self.sidebar.crop.get_sell()}}g</td>
-							</tr>
-							<tr>
-								<th><i class="fa fa-fw fa-bar-chart"></i> Profit/day</th>
-								<td>{{self.sidebar.crop.profit}}g</td>
-							</tr>
-							<tr>
-								<th>
-									<i class="fa fa-fw fa-line-chart"></i> Fixed Budget Profit/day
-									<sup><a title="Description of Fixed Budget Profit on Reddit" href="https://www.reddit.com/r/StardewValley/comments/55puw1/crop_planner_v2_released_multiple_years_importing/d93smm8/" target="_blank" rel="noreferrer">[?]</a></sup>
-								</th>
-								<td>{{self.sidebar.crop.fixed_profit}}g</td>
-							</tr>
+								<tr>
+									<th><i class="fa fa-fw fa-plus-square"></i> Ingredient Value</th>
+									<td>{{self.format_Currency(self.sidebar.crop.sell)}}</td>
+								</tr>
 							<tr ng-show="self.sidebar.crop.note">
 								<th><i class="fa fa-fw fa-exclamation-circle"></i> Note</th>
 								<td>{{self.sidebar.crop.note}}</td>
@@ -481,11 +463,11 @@
 	
 	<!-- [LICENSE] -->
 	<div class="license">
-		<a href="http://stardewvalley.net/" target="_blank" rel="noreferrer">Stardew Valley</a> (v1.1) © <a href="https://twitter.com/ConcernedApe" target="_blank" rel="noreferrer">ConcernedApe</a>. Unofficial <a href="https://github.com/exnil/crop_planner" target="_blank" rel="noreferrer">crop planner source code</a> made available under the MIT License. 
+		<a href="" target="_blank" rel="noreferrer">Travellers Rest</a> (v) © <a href="null" target="_blank" rel="noreferrer">null</a>. Unofficial <a href="" target="_blank" rel="noreferrer">crop planner source code</a> made available under the MIT License. 
 		<br>
-		<a href="https://github.com/exnil/crop_planner" target="_blank" rel="noreferrer" title="GitHub Page"><i class="fa fa-github fa-lg"></i></a>
+		<a href="" target="_blank" rel="noreferrer" title="GitHub Page"><i class="fa fa-github fa-lg"></i></a>
 		&ensp;
-		<a href="https://www.reddit.com/r/StardewValley/comments/55puw1/crop_planner_v2_released_multiple_years_importing/" target="_blank" rel="noreferrer" title="Reddit Thread"><i class="fa fa-reddit-alien fa-lg"></i></a>
+		<a href="" target="_blank" rel="noreferrer" title="Reddit Thread"><i class="fa fa-reddit-alien fa-lg"></i></a>
 	</div>
 	<!-- [/LICENSE] -->
 </body>
