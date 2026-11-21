@@ -21,7 +21,7 @@ class Main:
 	
 	def __init__(self):
 		clear()
-		os.chdir("../")
+		os.chdir(path.abspath(path.join(path.dirname(__file__), "..")))
 		header("Watching style.less for changes\nctrl+c to exit")
 		print()
 		
