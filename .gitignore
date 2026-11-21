@@ -2,3 +2,8 @@ utils/data/*
 *.pyo
 *.pyc
 /.vs
+localhost.cmd
+utils/watchless.cmd
+utils/watch-less.py
+utils/watch-less.py
+utils/watch-less.py

@@ -1,474 +1,673 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-	<title>Stardew Valley Crop Planner</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	
-	<link rel="icon" href="images/favicon.png" type="image/png">
-	
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="style.css">
-	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
-	
-	<script src="scripts/checklist-model.js"></script>	
-	<script src="scripts/planner.js"></script>
+    <title>Travellers Rest Crop Planner</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+
+    <script src="scripts/checklist-model.js"></script>
+    <script src="scripts/planner.js"></script>
 </head>
 <body ng-app="planner_app" ng-controller="planner_controller as self" ng-class="{'sidebar_open': self.sidebar.mode != ''}">
-	
-	<!-- [HEADER] -->
-	<header>
-		<img src="images/logo.png" class="logo">
-		<div class="page_title">Crop Planner</div>
-	</header>
-	<!-- [/HEADER] -->
-	
-	
-	<!-- [CONTENT] -->
-	<div id="content" class="container">
-		<div ng-show="!self.loaded" class="loading">
-			<i class="fa fa-circle-o-notch fa-spin"></i>
-			Loading...
-		</div>
-		
-		<div ng-show="self.loaded" ng-cloak>
-			<!-- [TOP_MENU] -->
-			<nav id="top_menu" class="row">
-				<div class="col-md-3 col-xs-12 year_navigation">
-					<div class="btn-group sn_arrows">
-						<div class="btn btn-default" ng-click="self.inc_year(-1)"><i class="fa fa-chevron-left"></i></div>
-						<div class="btn btn-default" ng-click="self.inc_year(1)"><i class="fa fa-chevron-right"></i></div>
-					</div>
-					<div class="year_info">
-						<div class="yi_name">Year {{self.cyear.index+1}}, {{self.cseason.name}}</div>
-					</div>
-				</div>
-				
-				<div class="col-md-6 col-xs-8">
-					<div class="season_stats">
-						<table class="table table-striped">
-							<tbody>
-								<tr>
-									<th width="25%"><i class="fa fa-fw fa-tint"></i> Planted</th>
-									<td>{{self.cfarm().totals.season[self.cseason.index].get_plantings(1)}}</td>
-									
-									<th width="25%"><i class="fa fa-fw fa-pagelines"></i> Harvests</th>
-									<td>{{self.cfarm().totals.season[self.cseason.index].get_harvests(1)}}</td>
-								</tr>
-								<tr>
-									<th width="25%"><i class="fa fa-fw fa-bar-chart"></i> Profit</th>
-									<td colspan="3">
-										<div class="profit min" ng-show="self.cfarm().totals.season[self.cseason.index].profit.min==self.cfarm().totals.season[self.cseason.index].profit.max">
-											<div>{{self.cfarm().totals.season[self.cseason.index].profit.min>0 && '+' || ''}}{{self.cfarm().totals.season[self.cseason.index].get_profit(1)}}g</div>
-										</div>
-										
-										<div class="profit" ng-show="self.cfarm().totals.season[self.cseason.index].profit.min!=self.cfarm().totals.season[self.cseason.index].profit.max">
-											<span>{{self.cfarm().totals.season[self.cseason.index].profit.min>0 && '+' || ''}}{{self.cfarm().totals.season[self.cseason.index].get_profit(1)}}g</span>
-											<i class="asc_icon fa fa-sort-amount-asc fa-rotate-270"></i> 
-											<span>{{self.cfarm().totals.season[self.cseason.index].profit.max>0 && '+' || ''}}{{self.cfarm().totals.season[self.cseason.index].get_profit(1, 1)}}g</span>
-										</div>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-				
-				<div class="col-md-2 col-md-offset-1 col-xs-4 clear_buttons">
-					<div class="btn btn-default btn-block" ng-click="self.clear_season(self.cseason)"><i class="fa fa-calendar"></i> Clear {{self.cseason.name}}</div>
-					<div class="btn btn-default btn-block" ng-click="self.clear_year(self.cyear)"><i class="fa fa-trash"></i> Clear Year</div>
-				</div>
-			</nav>
-			<!-- [/TOP_MENU] -->
-			
-			
-			<!-- [SEASON_PICKER] -->
-			<div id="season_picker" class="row">
-				<div class="col-xs-3" ng-repeat="season in self.seasons">
-					<div class="season" ng-class="{'active': season.id==self.cseason.id}" ng-click="self.set_season(season.index)">
-						<img ng-src="{{season.get_image()}}" class="image">
-						<div class="name">{{season.name}}</div>
-						
-						<div class="profit min hidden-xs" ng-show="self.cfarm().totals.season[season.index].profit.min==self.cfarm().totals.season[season.index].profit.max">
-							<div>{{self.cfarm().totals.season[season.index].profit.min>0 && '+' || ''}}{{self.cfarm().totals.season[season.index].get_profit(1)}}g</div>
-						</div>
-						
-						<div class="profit hidden-xs" ng-show="self.cfarm().totals.season[season.index].profit.min!=self.cfarm().totals.season[season.index].profit.max">
-							<i class="asc_icon fa fa-sort-amount-asc"></i>
-							<div>{{self.cfarm().totals.season[season.index].profit.min>0 && '+' || ''}}{{self.cfarm().totals.season[season.index].get_profit(1)}}g</div>
-							<div>{{self.cfarm().totals.season[season.index].profit.max>0 && '+' || ''}}{{self.cfarm().totals.season[season.index].get_profit(1, 1)}}g</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- [/SEASON_PICKER] -->
-			
-			
-			<!-- [CALENDAR] -->
-			<div id="calendar">
-				<div class="day_names">
-					<div class="day_name">M</div>
-					<div class="day_name">T</div>
-					<div class="day_name">W</div>
-					<div class="day_name">Th</div>
-					<div class="day_name">F</div>
-					<div class="day_name">Sa</div>
-					<div class="day_name">Su</div>
-				</div>
-				<div class="day_container">
-					<div class="day" ng-repeat="date in self.days | limitTo:self.SEASON_DAYS:self.cseason.start-1" ng-click="self.open_plans(date)" ng-class="{'filled': self.cfarm().plans[date].length || self.cfarm().harvests[date].length}">
-						
-						<div class="date_top">
-							<div class="date">
-								<span class="visible-xs">{{self.get_date(date, '%j%S - %l')}}</span>
-								<span class="hidden-xs">{{date%self.SEASON_DAYS>0 && date%self.SEASON_DAYS || self.SEASON_DAYS}}</span>
-							</div>
-						</div>
-						
-						<div ng-show="self.cfarm().plans[date].length" class="items">
-							<div class="planting">
-								<div class="plan" ng-repeat="plan in self.cfarm().plans[date] | limitTo:4">
-									<img ng-src="{{plan.crop.get_image(1)}}">
-									<div class="amount">x{{plan.amount}}</div>
-								</div>
-							</div>
-							<div class="more" ng-show="self.cfarm().plans[date].length > 4">{{self.cfarm().plans[date].length-4}} more...</div>
-						</div>
-						
-						<div ng-show="self.cfarm().harvests[date].length">
-							<div class="harvesting">
-								<div class="plan" ng-repeat="harvest in self.cfarm().harvests[date] | limitTo:4">
-									<img ng-src="{{harvest.crop.get_image()}}">
-									<div class="amount">x{{harvest.yield.min}}</div>
-								</div>
-							</div>
-							<div class="more" ng-show="self.cfarm().harvests[date].length > 4">{{self.cfarm().harvests[date].length-4}} more...</div>
-						</div>
-						
-						<div ng-show="self.cfarm().totals.day[date].profit.min || self.cfarm().totals.day[date].profit.max">
-							<div class="profit min" ng-show="self.cfarm().totals.day[date].profit.min==self.cfarm().totals.day[date].profit.max">
-								<div>{{self.cfarm().totals.day[date].profit.min>0 && '+' || ''}}{{self.cfarm().totals.day[date].get_profit(1)}}g</div>
-							</div>
-							
-							<div class="profit" ng-show="self.cfarm().totals.day[date].profit.min!=self.cfarm().totals.day[date].profit.max">
-								<i class="asc_icon fa fa-sort-amount-asc"></i>
-								<div>{{self.cfarm().totals.day[date].profit.min>0 && '+' || ''}}{{self.cfarm().totals.day[date].get_profit(1)}}g</div>
-								<div>{{self.cfarm().totals.day[date].profit.max>0 && '+' || ''}}{{self.cfarm().totals.day[date].get_profit(1, 1)}}g</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- [/CALENDAR] -->
-		</div>
-	</div>
-	<!-- [/CONTENT] -->
-	
-	
-	<!-- [SIDEBAR] -->
-	<div id="sidebar_backdrop" ng-click="self.sidebar.close()" ng-class="{'open': self.sidebar.mode != ''}"></div>
-	<div id="sidebar" ng-class="{'open': self.sidebar.mode != ''}" ng-show="self.loaded" ng-cloak>
-		
-		<!-- [SIDEBAR_BUTTONS] -->
-		<ul class="sb_buttons">
-			<li ng-click="self.sidebar.open('cropinfo')" ng-class="{'active': self.sidebar.mode == 'cropinfo'}" title="Crop Info">
-				<i class="fa fa-pagelines"></i>
-			</li>
-			<li ng-click="self.sidebar.open('settings')"  ng-class="{'active': self.sidebar.mode == 'settings'}" title="Settings">
-				<i class="fa fa-gear"></i>
-			</li>
-		</ul>
-		<!-- [/SIDEBAR_BUTTONS] -->
-		
-		
-		<!-- [SIDEBAR_CONTENT] -->
-		<div class="sb_content">
-		
-			<!-- [SB_CROP_INFO] -->
-			<div id="sb_cropinfo" class="panel panel-default sb_section" ng-class="{'active': self.sidebar.mode == 'cropinfo'}">
-				<div class="panel-heading">
-					<div class="back" ng-click="self.sidebar.back()"><i class="fa fa-chevron-left" ></i></div>
-					<h3 class="panel-title">Crop Info</h3>
-				</div>
-				<div class="panel-body">
-					<div ng-show="!self.sidebar.crop">
-						<div class="filter">
-							<label ng-repeat="season in self.cinfo_settings.season_options">
-								<input type="checkbox" checklist-model="self.cinfo_settings.seasons" checklist-value="season.id"> {{season.name}}
-							</label>
-							<br>
-							<label><input type="checkbox" ng-model="self.cinfo_settings.regrows"> Regrows</label>
-							<input type="text" class="form-control search" placeholder="Search" ng-model="self.cinfo_settings.search">
-						</div>
-						
-						<div class="crops_container">
-							<table class="table table-condensed crops">
-								<thead>
-									<tr>
-										<th ng-click="self.ci_set_sort('name')" colspan="2">Crop</th>
-										<th ng-click="self.ci_set_sort('grow')"><i class="fa fa-clock-o"></i> Days</th>
-										<th ng-click="self.ci_set_sort('buy')">Buy</th>
-										<th ng-click="self.ci_set_sort('sell')">Ingredient Value</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr ng-repeat="crop in self.crops_list | orderBy:self.cinfo_settings.sort:self.cinfo_settings.order | filter: self.cinfo_settings.search" class="crop" ng-show="crop.can_grow(self.cinfo_settings.seasons, 1) && (!self.cinfo_settings.regrows || crop.regrow)" ng-click="self.sidebar.open_crop(crop)">
-										<td width="1"><img ng-src="{{crop.get_image()}}"></td>
-										<td class="name">
-											{{crop.name}}
-											<span class="text-muted" ng-show="crop.harvest.yield>1">(x{{crop.harvest.yield}})</span>
-										</td>
-										<td>{{crop.growTime}}</td>
-										<td>{{self.format_Currency(crop.buy)}}</td>
-										<td>{{self.format_Currency(crop.sell)}}</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-					
-					<div class="crop_info" ng-show="self.sidebar.crop">
-						<div class="ci_header">
-							<img ng-src="{{self.sidebar.crop.get_image()}}">
-							<div class="ci_name">{{self.sidebar.crop.name}}</div>
-							<div class="ci_seasons">
-								<span ng-repeat="season in self.sidebar.crop.seasons">{{season}}{{$last ? '' : ', '}}</span>
-							</div>
-						</div>
-						
-						<table class="table table-condensed">
-							<tr>
-								<th><i class="fa fa-fw fa-clock-o"></i> Grows</th>
-								<td>{{self.sidebar.crop.growTime}} days</td>
-							</tr>
-							<tr ng-show="self.sidebar.crop.regrow">
-								<th><i class="fa fa-fw fa-refresh"></i> Regrows</th>
-								<td>{{self.sidebar.crop.regrow}} days</td>
-							</tr>
-							<tr ng-show="self.sidebar.crop.yield > 1">
-								<th><i class="fa fa-cubes"></i> Yields</th>
-								<td>x{{self.sidebar.crop.yield}}</td>
-							</tr>
-								<th><i class="fa fa-fw fa-minus-square"></i> Buy</th>
-								<td>{{self.format_Currency(self.sidebar.crop.buy)}}</td>
-							</tr>
-								<tr>
-									<th><i class="fa fa-fw fa-plus-square"></i> Ingredient Value</th>
-									<td>{{self.format_Currency(self.sidebar.crop.sell)}}</td>
-								</tr>
-							<tr ng-show="self.sidebar.crop.note">
-								<th><i class="fa fa-fw fa-exclamation-circle"></i> Note</th>
-								<td>{{self.sidebar.crop.note}}</td>
-							</tr>
-						</table>
-						<hr>
-						<a class="btn btn-primary" ng-href="{{self.sidebar.crop.get_url()}}" target="_blank" rel="noreferrer"><i class="fa fa-book"></i> Wiki Page</a>
-					</div>
-				</div>
-			</div>
-			<!-- [/SB_CROP_INFO] -->
-			
-			
-			<!-- [SB_SETTINGS] -->
-			<div id="sb_settings" class="panel panel-default sb_section" ng-class="{'active': self.sidebar.mode == 'settings'}">
-				<div class="panel-heading">
-					<div class="back" ng-click="self.sidebar.back()"><i class="fa fa-chevron-left" ></i></div>
-					<h3 class="panel-title">Settings</h3>
-				</div>
-				<div class="panel-body">
 
-					<hr>
-					
-					<div>
-						<h4>Miscellaneous</h4>
-						<div class="btn btn-default" ng-click="self.clear_all()"><i class="fa fa-trash"></i> Clear Planner</div>
-					</div>
-					
-					<hr>
-					
-					<h4>Importing & Exporting</h4>
-					<div class="btn btn-default" ng-click="self.sidebar.import_data()"><i class="fa fa-sign-in"></i> Import</div>
-					<div class="btn btn-default" ng-click="self.sidebar.export_data()"><i class="fa fa-sign-out"></i> Export</div>
-				</div>
-			</div>
-			<!-- [/SB_SETTINGS] -->
-			
-		</div>
-		<!-- [/SIDEBAR_CONTENT] -->
-	</div>
-	<!-- [/SIDEBAR] -->
-	
-	
-	<!-- [CROP_PLANNER_MODAL] -->
-	<div class="modal fade" id="crop_planner">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<div class="close" data-dismiss="modal"><i class="fa fa-times"></i></div>
-					<h4 class="modal-title">{{self.get_date(self.cdate, '%F &ensp;&mdash;&ensp; %l the %j%S')}}</h4>
-				</div>
-				<div class="modal-body">
-					<div class="plant_crop">
-						<div class="row">
-							<div class="col-md-4 col-xs-12">
-								<b>Plant Crop</b><br>
-								<select class="form-control" ng-model="self.newplan.crop_id"
-										ng-options="crop.id as crop.name for crop in self.crops_list | filter:self.planner_valid_crops">
-								</select>
-							</div>
-							<div class="col-md-2 col-xs-4">
-								<label>
-									<b>Amount</b><br>
-									<input class="form-control" type="text" ng-model="self.newplan.amount" ng-keypress="self.add_plan_key(self.cdate, $event)">
-								</label>
-							</div>
-							<div class="col-md-3 col-xs-4" ng-if="self.config.fertilizer && self.fertilizer.length">
-								<b>Fertilizer</b><br>
-								<select class="form-control" ng-model="self.newplan.fertilizer" ng-options="fert as fert.name for fert in self.config.fertilizer track by fert.id">
-								</select>
-							</div>
-							<div class="col-md-3 col-xs-4">
-								<b></b><br>
-								<div class="btn btn-default" ng-click="self.add_plan(self.cdate)"><i class="fa fa-plus"></i> Plant</div>
-								<div class="btn btn-default" ng-click="self.add_plan(self.cdate, true)" data-toggle="tooltip" data-placement="bottom" title="Auto-replant on day of harvest"><i class="fa fa-calendar"></i> Autoplant</div>
-							</div>
-						</div>
-						<br>
-					</div>
-					
-					<div ng-show="self.cfarm().plans[self.cdate].length">
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h3 class="panel-title"><i class="fa fa-tint"></i> Planting</h3>
-							</div>
-							<div class="panel-body">
-								<table class="crops table table-condensed">
-									<thead>
-										<tr>
-											<th colspan="2">Crop</th>
-											<th>Amount</th>
-											<th>Fertilizer</th>
-											<th>Cost</th>
-											<th><i class="fa fa-clock-o"></i> Days</th>
-											<th><i class="fa fa-refresh"></i> Regrows</th>
-											<th width="1"></th>
-											<th width="1"></th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr class="crop" ng-repeat="plan in self.cfarm().plans[self.cdate]">
-											<td width="1">
-												<img ng-src="{{plan.crop.get_image(1)}}">
-											</td>
-											<td>
-												{{plan.crop.name}}
-											</td>
-											<td>
-												<span ng-show="self.editplan!=plan">x{{plan.amount}}</span>
-												<span ng-show="self.editplan==plan">x<input style="padding-left:2px;width:100px" class="form-control" type="number" min="1" ng-model="plan.amount"></span>
-											</td>
-											<td>
-												<div ng-show="plan.fertilizer.id!='none' && self.editplan!=plan">
-													<img ng-src="{{plan.fertilizer.get_image()}}">
-													{{plan.fertilizer.name}}
-												</div>
-												<div ng-show="self.editplan==plan">
-													<select class="form-control" ng-model="plan.fertilizer" ng-options="fert as fert.name for fert in self.config.fertilizer track by fert.id"></select>
-												</div>
-											</td>
-											<td>-{{plan.get_cost(1)}}g</td>
-											<td>{{plan.get_grow_time()}}</td>
-											<td>{{plan.crop.regrow}}</td>
-											<td>
-												<div ng-show="self.editplan!=plan" class="btn btn-default" ng-click="self.edit_plan(plan)"><i class="fa fa-pencil"></i></div>
-												<div ng-show="self.editplan==plan" class="btn btn-success" ng-click="self.edit_plan(plan, 1)"><i class="fa fa-save"></i></div>
-											</td>
-											<td><div class="btn btn-default" ng-click="self.remove_plan(self.cdate, $index)"><i class="fa fa-trash"></i></div></td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-					<div ng-show="!self.cfarm().plans[self.cdate].length" class="text-muted"><i class="fa fa-tint"></i> No planting.<hr></div>
-					
-					<div ng-show="self.cfarm().harvests[self.cdate].length">
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h3 class="panel-title"><i class="fa fa-pagelines"></i> Harvesting</h3>
-							</div>
-							<div class="panel-body">
-								<table class="crops table table-condensed">
-									<thead>
-										<tr>
-											<th colspan="2">Crop</th>
-											<th>Yield</th>
-											<th>Revenue</th>
-											<th>Profit</th>
-											<th><i class="fa fa-refresh"></i> Regrows</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr class="crop" ng-repeat="harvest in self.cfarm().harvests[self.cdate]">
-											<td width="1">
-												<img ng-src="{{harvest.crop.get_image()}}">
-											</td>
-											<td>{{harvest.crop.name}}</td>
-											<td>
-												<span ng-show="harvest.yield.min==harvest.yield.max">x{{harvest.yield.min}}</span>
-												<span ng-show="harvest.yield.min!=harvest.yield.max">
-													x{{harvest.yield.min}}
-													<i class="fa fa-fw fa-sort-amount-asc fa-rotate-270 compare"></i>
-													x{{harvest.yield.max}}
-												</span>
-											</td>
-											<td>
-												<span ng-show="harvest.revenue.min==harvest.revenue.max">+{{harvest.get_revenue(1)}}g</span>
-												<span ng-show="harvest.revenue.min!=harvest.revenue.max">
-													{{harvest.get_revenue(1)}}g
-													<i class="fa fa-fw fa-sort-amount-asc fa-rotate-270 compare"></i>
-													{{harvest.get_revenue(1, 1)}}g
-												</span>
-											</td>
-											<td>
-												<span ng-show="harvest.profit.min==harvest.profit.max">+{{harvest.get_profit(1)}}g</span>
-												<span ng-show="harvest.profit.min!=harvest.profit.max">
-													{{harvest.get_profit(1)}}g
-													<i class="fa fa-fw fa-sort-amount-asc fa-rotate-270 compare"></i>
-													{{harvest.get_profit(1, 1)}}g
-												</span>
-											</td>
-											<td>{{harvest.crop.regrow && harvest.crop.regrow+' days' || ''}}</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-					<div ng-show="!self.cfarm().harvests[self.cdate].length" class="text-muted"><i class="fa fa-pagelines"></i> No harvests.</div>
-				</div>
-				<div class="modal-footer">
-					<div class="btn btn-default" data-dismiss="modal"><i class="fa fa-check"></i> Done</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- [/CROP_PLANNER_MODAL] -->
-	
-	
-	<!-- [LICENSE] -->
-	<div class="license">
-		<a href="" target="_blank" rel="noreferrer">Travellers Rest</a> (v) © <a href="null" target="_blank" rel="noreferrer">null</a>. Unofficial <a href="" target="_blank" rel="noreferrer">crop planner source code</a> made available under the MIT License. 
-		<br>
-		<a href="" target="_blank" rel="noreferrer" title="GitHub Page"><i class="fa fa-github fa-lg"></i></a>
-		&ensp;
-		<a href="" target="_blank" rel="noreferrer" title="Reddit Thread"><i class="fa fa-reddit-alien fa-lg"></i></a>
-	</div>
-	<!-- [/LICENSE] -->
+    <!-- [HEADER] -->
+    <header class="tavern_header">
+        <div class="header_content">
+            <div class="header_eyebrow">TRAVELLERS REST</div>
+            <h1 class="page_title">Crop Planner</h1>
+        </div>
+    </header>
+    <!-- [/HEADER] -->
+    <!-- [CONTENT] -->
+    <div id="content" class="container">
+        <div ng-show="!self.loaded" class="loading">
+            <i class="fa fa-circle-o-notch fa-spin"></i>
+            Loading...
+        </div>
+
+        <div ng-show="self.loaded" ng-cloak>
+            <!-- [TOP_MENU] -->
+            <nav id="top_menu" class="row">
+                <div class="col-md-3 col-xs-12 year_navigation">
+                    <div class="btn-group sn_arrows">
+                        <div class="btn btn-default" ng-click="self.inc_year(-1)"><i class="fa fa-chevron-left"></i></div>
+                        <div class="btn btn-default" ng-click="self.inc_year(1)"><i class="fa fa-chevron-right"></i></div>
+                    </div>
+                    <div class="year_info">
+                        <div class="yi_name">Year {{self.cyear.index+1}}, {{self.cseason.name}}</div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-xs-8">
+                    <div class="season_stats">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th width="25%"><i class="fa fa-fw fa-tint"></i> Planted</th>
+                                    <td>{{self.cfarm().totals.season[self.cseason.index].get_plantings(1)}}</td>
+
+                                    <th width="25%"><i class="fa fa-fw fa-pagelines"></i> Total Yield</th>
+                                    <td>{{self.cfarm().totals.season[self.cseason.index].get_harvests(1)}}</td>
+                                </tr>
+                                <tr>
+                                    <th width="25%"><i class="fa fa-fw fa-bar-chart"></i> Net Ingredient Value</th>
+                                    <td colspan="3">
+                                        <div class="profit min" ng-show="self.cfarm().totals.season[self.cseason.index].profit.min==self.cfarm().totals.season[self.cseason.index].profit.max">
+
+                                            <div>
+                                                <span ng-if="self.cfarm().totals.season[self.cseason.index].profit.min > 0">+</span>
+                                                <span ng-repeat="part in self.format_Currency(self.cfarm().totals.season[self.cseason.index].profit.min).split(' ') track by $index"
+                                                      class="currency-part">
+                                                    {{part.slice(0, -1)}}
+                                                    <span class="coin-icon"
+                                                          ng-class="'coin-' + part.slice(-1)"></span>
+                                                </span>
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="profit" ng-show="self.cfarm().totals.season[self.cseason.index].profit.min != self.cfarm().totals.season[self.cseason.index].profit.max">
+
+                                            <span>
+                                                <span ng-if="self.cfarm().totals.season[self.cseason.index].profit.min > 0">+</span>
+                                                <span ng-repeat="part in self.format_Currency(self.cfarm().totals.season[self.cseason.index].profit.min).split(' ') track by $index"
+                                                      class="currency-part">
+                                                    {{part.slice(0, -1)}}
+                                                    <span class="coin-icon"
+                                                          ng-class="'coin-' + part.slice(-1)"></span>
+                                                </span>
+                                            </span>
+
+                                            <i class="asc_icon fa fa-sort-amount-asc fa-rotate-270"></i>
+
+                                            <span>
+                                                <span ng-if="self.cfarm().totals.season[self.cseason.index].profit.max > 0">+</span>
+                                                <span ng-repeat="part in self.format_Currency(self.cfarm().totals.season[self.cseason.index].profit.max).split(' ') track by $index"
+                                                      class="currency-part">
+                                                    {{part.slice(0, -1)}}
+                                                    <span class="coin-icon"
+                                                          ng-class="'coin-' + part.slice(-1)"></span>
+                                                </span>
+                                            </span>
+
+                                        </div>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col-md-2 col-md-offset-1 col-xs-4 clear_buttons">
+                    <div class="btn btn-default btn-block" ng-click="self.clear_season(self.cseason)"><i class="fa fa-calendar"></i> Clear {{self.cseason.name}}</div>
+                    <div class="btn btn-default btn-block" ng-click="self.clear_year(self.cyear)"><i class="fa fa-trash"></i> Clear Year</div>
+                </div>
+            </nav>
+            <!-- [/TOP_MENU] -->
+            <!-- [SEASON_PICKER] -->
+            <div id="season_picker" class="row">
+                <div class="col-xs-3" ng-repeat="season in self.seasons">
+                    <div class="season" ng-class="{'active': season.id==self.cseason.id}" ng-click="self.set_season(season.index)">
+
+                        <div class="name">{{season.name}}</div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- [/SEASON_PICKER] -->
+            <!-- [CALENDAR] -->
+            <div id="calendar">
+                <div class="day_names">
+                    <div class="day_name">M</div>
+                    <div class="day_name">T</div>
+                    <div class="day_name">W</div>
+                    <div class="day_name">Th</div>
+                    <div class="day_name">F</div>
+                    <div class="day_name">Sa</div>
+                    <div class="day_name">Su</div>
+                </div>
+                <div class="day_container">
+                    <div class="day"
+                         ng-repeat="date in self.days | limitTo:self.SEASON_DAYS:self.cseason.start-1 track by $index"
+                         ng-click="self.open_plans(date)">
+
+
+                        <div class="date_top">
+                            <div class="date">
+                                <span class="visible-xs">{{self.get_date(date, '%j%S - %l')}}</span>
+                                <span class="hidden-xs">{{date%self.SEASON_DAYS>0 && date%self.SEASON_DAYS || self.SEASON_DAYS}}</span>
+                            </div>
+                        </div>
+
+                        <div ng-show="self.cfarm().plans[date].length" class="items">
+                            <div class="planting">
+                                <div class="plan" ng-repeat="plan in self.cfarm().plans[date] | limitTo:4">
+                                    <img ng-src="{{plan.crop.get_image(1)}}">
+                                    <div class="amount">x{{plan.amount}}</div>
+                                </div>
+                            </div>
+                            <div class="more" ng-show="self.cfarm().plans[date].length > 4">{{self.cfarm().plans[date].length-4}} more...</div>
+                        </div>
+
+                        <div ng-show="self.cfarm().harvests[date].length">
+                            <div class="harvesting">
+                                <div class="plan" ng-repeat="harvest in self.cfarm().harvests[date] | limitTo:4">
+                                    <img ng-src="{{harvest.crop.get_image()}}">
+                                    <div class="amount">x{{harvest.yield.min}}</div>
+                                </div>
+                            </div>
+                            <div class="more" ng-show="self.cfarm().harvests[date].length > 4">{{self.cfarm().harvests[date].length-4}} more...</div>
+                        </div>
+
+                        <div ng-show="self.cfarm().totals.day[date].profit.min || self.cfarm().totals.day[date].profit.max">
+                            <div class="profit min" ng-show="self.cfarm().totals.day[date].profit.min==self.cfarm().totals.day[date].profit.max">
+
+                                <div>
+                                    <span ng-if="self.cfarm().totals.day[date].profit.min > 0">+</span>
+                                    <span ng-repeat="part in self.format_Currency(self.cfarm().totals.day[date].profit.min).split(' ') track by $index"
+                                          class="currency-part">
+                                        {{part.slice(0, -1)}}
+                                        <span class="coin-icon"
+                                              ng-class="'coin-' + part.slice(-1)"></span>
+                                    </span>
+                                </div>
+
+                            </div>
+
+                            <div class="profit" ng-show="self.cfarm().totals.day[date].profit.min!=self.cfarm().totals.day[date].profit.max">
+                                <i class="asc_icon fa fa-sort-amount-asc"></i>
+                                <div>
+                                    <span ng-if="self.cfarm().totals.day[date].profit.min > 0">+</span>
+                                    <span ng-repeat="part in self.format_Currency(self.cfarm().totals.day[date].profit.min).split(' ') track by $index"
+                                          class="currency-part">
+                                        {{part.slice(0, -1)}}
+                                        <span class="coin-icon"
+                                              ng-class="'coin-' + part.slice(-1)"></span>
+                                    </span>
+                                </div>
+                                <div>
+                                    <span ng-if="self.cfarm().totals.day[date].profit.max > 0">+</span>
+                                    <span ng-repeat="part in self.format_Currency(self.cfarm().totals.day[date].profit.max).split(' ') track by $index"
+                                          class="currency-part">
+                                        {{part.slice(0, -1)}}
+                                        <span class="coin-icon"
+                                              ng-class="'coin-' + part.slice(-1)"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- [/CALENDAR] -->
+        </div>
+    </div>
+    <!-- [/CONTENT] -->
+    <!-- [SIDEBAR] -->
+    <div id="sidebar_backdrop" ng-click="self.sidebar.close()" ng-class="{'open': self.sidebar.mode != ''}"></div>
+    <div id="sidebar" ng-class="{'open': self.sidebar.mode != ''}" ng-show="self.loaded" ng-cloak>
+
+        <!-- [SIDEBAR_BUTTONS] -->
+        <ul class="sb_buttons">
+            <li ng-click="self.sidebar.open('cropinfo')" ng-class="{'active': self.sidebar.mode == 'cropinfo'}" title="Crop Info">
+                <i class="fa fa-pagelines"></i>
+            </li>
+            <li ng-click="self.sidebar.open('settings')" ng-class="{'active': self.sidebar.mode == 'settings'}" title="Settings">
+                <i class="fa fa-gear"></i>
+            </li>
+        </ul>
+        <!-- [/SIDEBAR_BUTTONS] -->
+        <!-- [SIDEBAR_CONTENT] -->
+        <div class="sb_content">
+
+            <!-- [SB_CROP_INFO] -->
+            <div id="sb_cropinfo" class="panel panel-default sb_section" ng-class="{'active': self.sidebar.mode == 'cropinfo'}">
+                <div class="panel-heading">
+                    <div class="back" ng-click="self.sidebar.back()"><i class="fa fa-chevron-left"></i></div>
+                    <h3 class="panel-title">Crop Info</h3>
+                </div>
+                <div class="panel-body">
+                    <div ng-show="!self.sidebar.crop">
+
+                        <div class="filter">
+                            <label ng-repeat="season in self.cinfo_settings.season_options">
+                                <input type="checkbox"
+                                       checklist-model="self.cinfo_settings.seasons"
+                                       checklist-value="season.id">
+                                {{season.name}}
+                            </label>
+
+                            <label>
+                                <input type="checkbox" ng-model="self.cinfo_settings.regrows">
+                                Regrows
+                            </label>
+
+                            <input type="text"
+                                   class="form-control search"
+                                   placeholder="Search"
+                                   ng-model="self.cinfo_settings.search">
+                        </div>
+
+
+                        <div class="crops_container">
+                            <table class="table table-condensed crops">
+                                <thead>
+                                    <tr>
+                                        <th ng-click="self.ci_set_sort('name')" colspan="2">Crop</th>
+                                        <th ng-click="self.ci_set_sort('grow')"><i class="fa fa-clock-o"></i> Days</th>
+                                        <th ng-click="self.ci_set_sort('buy')">Buy</th>
+                                        <th ng-click="self.ci_set_sort('sell')">Ingredient Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="crop in self.crops_list | orderBy:self.cinfo_settings.sort:self.cinfo_settings.order | filter: self.cinfo_settings.search" class="crop" ng-show="crop.can_grow(self.cinfo_settings.seasons, 1) && (!self.cinfo_settings.regrows || crop.regrow)" ng-click="self.sidebar.open_crop(crop)">
+                                        <td width="1"><img ng-src="{{crop.get_image()}}"></td>
+                                        <td class="name">
+                                            {{crop.name}}
+                                            <span class="text-muted" ng-show="crop.yield > 1">
+                                                (x{{crop.yield}})
+                                            </span>
+                                        </td>
+                                        <td>{{crop.growTime}}</td>
+
+                                        <td>
+                                            <span ng-repeat="part in self.format_Currency(crop.buy).split(' ') track by $index"
+                                                  class="currency-part">
+                                                {{part.slice(0, -1)}}
+                                                <span class="coin-icon"
+                                                      ng-class="'coin-' + part.slice(-1)"></span>
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <span ng-repeat="part in self.format_Currency(crop.sell).split(' ') track by $index"
+                                                  class="currency-part">
+                                                {{part.slice(0, -1)}}
+                                                <span class="coin-icon"
+                                                      ng-class="'coin-' + part.slice(-1)"></span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="crop_info" ng-show="self.sidebar.crop">
+                        <div class="ci_header">
+                            <img ng-src="{{self.sidebar.crop.get_image()}}">
+                            <div class="ci_name">{{self.sidebar.crop.name}}</div>
+                            <div class="ci_seasons">
+                                <span ng-repeat="season in self.sidebar.crop.seasons">{{season}}{{$last ? '' : ', '}}</span>
+                            </div>
+                        </div>
+
+                        <table class="table table-condensed">
+                            <tr>
+                                <th><i class="fa fa-fw fa-clock-o"></i> Grows</th>
+                                <td>{{self.sidebar.crop.growTime}} days</td>
+                            </tr>
+                            <tr ng-show="self.sidebar.crop.regrow">
+                                <th><i class="fa fa-fw fa-refresh"></i> Regrows</th>
+                                <td>{{self.sidebar.crop.regrow}} days</td>
+                            </tr>
+                            <tr ng-show="self.sidebar.crop.yield > 1">
+                                <th><i class="fa fa-cubes"></i> Yields</th>
+                                <td>x{{self.sidebar.crop.yield}}</td>
+                            </tr>
+
+                            <tr>
+                                <th><i class="fa fa-fw fa-minus-square"></i> Buy</th>
+                                <td>
+                                    <span ng-repeat="part in self.format_Currency(self.sidebar.crop.buy).split(' ') track by $index"
+                                          class="currency-part">
+                                        {{part.slice(0, -1)}}
+                                        <span class="coin-icon"
+                                              ng-class="'coin-' + part.slice(-1)"></span>
+                                    </span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th><i class="fa fa-fw fa-plus-square"></i> Ingredient Value</th>
+                                <td>
+                                    <span ng-repeat="part in self.format_Currency(self.sidebar.crop.sell).split(' ') track by $index"
+                                          class="currency-part">
+                                        {{part.slice(0, -1)}}
+                                        <span class="coin-icon"
+                                              ng-class="'coin-' + part.slice(-1)"></span>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr ng-show="self.sidebar.crop.note">
+                                <th><i class="fa fa-fw fa-exclamation-circle"></i> Note</th>
+                                <td>{{self.sidebar.crop.note}}</td>
+                            </tr>
+                        </table>
+                        <hr>
+                        <a class="btn btn-primary" ng-href="{{self.sidebar.crop.get_url()}}" target="_blank" rel="noreferrer"><i class="fa fa-book"></i> Wiki Page</a>
+                    </div>
+                </div>
+            </div>
+            <!-- [/SB_CROP_INFO] -->
+            <!-- [SB_SETTINGS] -->
+            <div id="sb_settings" class="panel panel-default sb_section" ng-class="{'active': self.sidebar.mode == 'settings'}">
+                <div class="panel-heading">
+                    <div class="back" ng-click="self.sidebar.back()"><i class="fa fa-chevron-left"></i></div>
+                    <h3 class="panel-title">Settings</h3>
+                </div>
+                <div class="panel-body">
+
+                    <hr>
+
+                    <div>
+                        <h4>Miscellaneous</h4>
+                        <div class="btn btn-default" ng-click="self.clear_all()"><i class="fa fa-trash"></i> Clear Planner</div>
+                    </div>
+
+                    <hr>
+
+                    <h4>Importing & Exporting</h4>
+                    <div class="btn btn-default" ng-click="self.sidebar.import_data()"><i class="fa fa-sign-in"></i> Import</div>
+                    <div class="btn btn-default" ng-click="self.sidebar.export_data()"><i class="fa fa-sign-out"></i> Export</div>
+                </div>
+            </div>
+            <!-- [/SB_SETTINGS] -->
+
+        </div>
+        <!-- [/SIDEBAR_CONTENT] -->
+    </div>
+    <!-- [/SIDEBAR] -->
+    <!-- [CROP_PLANNER_MODAL] -->
+    <div class="modal fade" id="crop_planner">
+        <div class="modal-dialog">
+            <div class="modal-content" ng-click="cropMenu.open = false">
+                <div class="modal-header">
+                    <div class="close" data-dismiss="modal"><i class="fa fa-times"></i></div>
+                    <h4 class="modal-title">{{self.get_date(self.cdate, '%F &ensp;&mdash;&ensp; %l the %j%S')}}</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="plant_crop">
+                        <div class="row">
+                            <div class="col-md-4 col-xs-12">
+                                <b>Plant Crop</b><br>
+
+
+                                <div class="crop-select"
+                                     ng-init="cropMenu = {open: false, search: ''}"
+                                     ng-click="$event.stopPropagation()">
+
+                                    <!-- Selected Crop -->
+                                    <button type="button"
+                                            class="crop-select-toggle"
+                                            ng-click="cropMenu.open = !cropMenu.open; cropMenu.search = ''">
+
+                                        <span ng-if="!self.newplan.crop_id">Select a crop</span>
+
+                                        <span ng-repeat="crop in self.crops_list"
+                                              ng-if="crop.id === self.newplan.crop_id">
+                                            {{crop.name}}
+                                        </span>
+
+                                        <i class="fa fa-chevron-down"></i>
+                                    </button>
+
+                                    <!-- Dropdown Menu -->
+                                    <div class="crop-select-list" ng-show="cropMenu.open">
+
+                                        <!-- Search Field -->
+                                        <div class="crop-select-search">
+                                            <input type="text"
+                                                   class="form-control"
+                                                   placeholder="Search crops..."
+                                                   ng-model="cropMenu.search"
+                                                   ng-click="$event.stopPropagation()">
+                                        </div>
+
+                                        <!-- Crop Options -->
+                                        <button type="button"
+                                                class="crop-select-option"
+                                                ng-repeat="crop in self.crops_list | filter:self.planner_valid_crops | filter:{name: cropMenu.search}"
+                                                ng-click="self.newplan.crop_id = crop.id; cropMenu.open = false">
+                                            {{crop.name}}
+                                        </button>
+
+                                        <!-- No Matches -->
+                                        <div class="crop-select-empty"
+                                             ng-show="(self.crops_list | filter:self.planner_valid_crops | filter:{name: cropMenu.search}).length === 0">
+                                            No matching crops
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="col-md-2 col-xs-4">
+                                <label>
+                                    <b>Amount</b><br>
+                                    <input class="form-control" type="text" ng-model="self.newplan.amount" ng-keypress="self.add_plan_key(self.cdate, $event)">
+                                </label>
+                            </div>
+                            <div class="col-md-3 col-xs-4" ng-if="self.config.fertilizer && self.fertilizer.length">
+                                <b>Fertilizer</b><br>
+                                <select class="form-control" ng-model="self.newplan.fertilizer" ng-options="fert as fert.name for fert in self.config.fertilizer track by fert.id">
+                                </select>
+                            </div>
+                            <div class="col-md-3 col-xs-4">
+                                <b></b><br>
+                                <div class="btn btn-default" ng-click="self.add_plan(self.cdate)"><i class="fa fa-plus"></i> Plant</div>
+                                <div class="btn btn-default" ng-click="self.add_plan(self.cdate, true)" data-toggle="tooltip" data-placement="bottom" title="Auto-replant on day of harvest"><i class="fa fa-calendar"></i> Autoplant</div>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+
+                    <div ng-show="self.cfarm().plans[self.cdate].length">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-tint"></i> Planting</h3>
+                            </div>
+                            <div class="panel-body">
+                                <table class="crops table table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">Crop</th>
+                                            <th>Amount</th>
+                                            <th>Fertilizer</th>
+                                            <th>Cost</th>
+                                            <th><i class="fa fa-clock-o"></i> Days</th>
+                                            <th><i class="fa fa-refresh"></i> Regrows</th>
+                                            <th width="1"></th>
+                                            <th width="1"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="crop" ng-repeat="plan in self.cfarm().plans[self.cdate]">
+                                            <td width="1">
+                                                <img ng-src="{{plan.crop.get_image(1)}}">
+                                            </td>
+                                            <td>
+                                                {{plan.crop.name}}
+                                            </td>
+                                            <td>
+                                                <span ng-show="self.editplan!=plan">x{{plan.amount}}</span>
+                                                <span ng-show="self.editplan==plan">x<input style="padding-left:2px;width:100px" class="form-control" type="number" min="1" ng-model="plan.amount"></span>
+                                            </td>
+                                            <td>
+                                                <div ng-show="plan.fertilizer.id!='none' && self.editplan!=plan">
+                                                    <img ng-src="{{plan.fertilizer.get_image()}}">
+                                                    {{plan.fertilizer.name}}
+                                                </div>
+                                                <div ng-show="self.editplan==plan">
+                                                    <select class="form-control" ng-model="plan.fertilizer" ng-options="fert as fert.name for fert in self.config.fertilizer track by fert.id"></select>
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <span ng-repeat="part in self.format_Currency(-plan.get_cost()).split(' ') track by $index"
+                                                      class="currency-part">
+                                                    {{part.slice(0, -1)}}
+                                                    <span class="coin-icon"
+                                                          ng-class="'coin-' + part.slice(-1)"></span>
+                                                </span>
+                                            </td>
+
+                                            <td>{{plan.get_grow_time()}}</td>
+                                            <td>{{plan.crop.regrow}}</td>
+                                            <td>
+                                                <div ng-show="self.editplan!=plan" class="btn btn-default" ng-click="self.edit_plan(plan)"><i class="fa fa-pencil"></i></div>
+                                                <div ng-show="self.editplan==plan" class="btn btn-success" ng-click="self.edit_plan(plan, 1)"><i class="fa fa-save"></i></div>
+                                            </td>
+                                            <td><div class="btn btn-default" ng-click="self.remove_plan(self.cdate, $index)"><i class="fa fa-trash"></i></div></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="!self.cfarm().plans[self.cdate].length" class="text-muted"><i class="fa fa-tint"></i> No planting.<hr></div>
+
+                    <div ng-show="self.cfarm().harvests[self.cdate].length">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-pagelines"></i> Harvesting</h3>
+                            </div>
+                            <div class="panel-body">
+                                <table class="crops table table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">Crop</th>
+                                            <th>Yield</th>
+                                            <th>Ingredient Value</th>
+                                            <th><i class="fa fa-refresh"></i> Regrows</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="crop" ng-repeat="harvest in self.cfarm().harvests[self.cdate]">
+                                            <td width="1">
+                                                <img ng-src="{{harvest.crop.get_image()}}">
+                                            </td>
+                                            <td>{{harvest.crop.name}}</td>
+                                            <td>
+                                                <span ng-show="harvest.yield.min==harvest.yield.max">x{{harvest.yield.min}}</span>
+                                                <span ng-show="harvest.yield.min!=harvest.yield.max">
+                                                    x{{harvest.yield.min}}
+                                                    <i class="fa fa-fw fa-sort-amount-asc fa-rotate-270 compare"></i>
+                                                    x{{harvest.yield.max}}
+                                                </span>
+                                            </td>
+
+                                            <td>
+                                                <!-- Equal minimum and maximum -->
+                                                <span ng-show="harvest.revenue.min == harvest.revenue.max">
+                                                    <span ng-if="harvest.revenue.min > 0">+</span>
+                                                    <span ng-repeat="part in self.format_Currency(harvest.revenue.min).split(' ') track by $index"
+                                                          class="currency-part">
+                                                        {{part.slice(0, -1)}}
+                                                        <span class="coin-icon"
+                                                              ng-class="'coin-' + part.slice(-1)"></span>
+                                                    </span>
+                                                </span>
+
+                                                <!-- Different minimum and maximum -->
+                                                <span ng-show="harvest.revenue.min != harvest.revenue.max">
+                                                    <span ng-repeat="part in self.format_Currency(harvest.revenue.min).split(' ') track by $index"
+                                                          class="currency-part">
+                                                        {{part.slice(0, -1)}}
+                                                        <span class="coin-icon"
+                                                              ng-class="'coin-' + part.slice(-1)"></span>
+                                                    </span>
+
+                                                    <i class="fa fa-fw fa-sort-amount-asc fa-rotate-270 compare"></i>
+
+                                                    <span ng-repeat="part in self.format_Currency(harvest.revenue.max).split(' ') track by $index"
+                                                          class="currency-part">
+                                                        {{part.slice(0, -1)}}
+                                                        <span class="coin-icon"
+                                                              ng-class="'coin-' + part.slice(-1)"></span>
+                                                    </span>
+                                                </span>
+                                            </td>
+                                            <td>{{harvest.crop.regrow && harvest.crop.regrow+' days' || ''}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="!self.cfarm().harvests[self.cdate].length" class="text-muted"><i class="fa fa-pagelines"></i> No harvests.</div>
+                </div>
+                <div class="modal-footer">
+                    <div class="btn btn-default" data-dismiss="modal"><i class="fa fa-check"></i> Done</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [/CROP_PLANNER_MODAL] -->
+    <!-- [LICENSE] -->
+    <div class="license">
+        <a href="https://store.steampowered.com/app/1139980/Travellers_Rest/"
+           target="_blank" rel="noopener noreferrer">Travellers Rest</a>
+        &copy; Isolated Games. Unofficial fan-made crop planner.
+
+        <br>
+
+        Based on the
+        <a href="https://github.com/exnil/crop_planner"
+           target="_blank" rel="noopener noreferrer">Stardew Valley Crop Planner</a>.
+        Original source code licensed under the MIT License.
+
+        <br>
+
+        <a href="https://github.com/XMoogleX/Travellers-Rest-Planner"
+           target="_blank" rel="noopener noreferrer"
+           title="GitHub Repository">
+            <i class="fa fa-github fa-lg"></i>
+        </a>
+        &ensp;
+        <a href="https://www.reddit.com/r/TravellersRest/s/ssdNhrsgKQ"
+           target="_blank" rel="noopener noreferrer"
+           title="Reddit Thread">
+            <i class="fa fa-reddit-alien fa-lg"></i>
+        </a>
+    </div>
+    <!-- [/LICENSE] -->
+
+    <script>
+(function () {
+     var today = new Date();
+     var month = today.getMonth() + 1;
+     var day = today.getDate();
+
+     // Halloween: October 24 - November 7
+     var halloween =
+         (month === 10 && day >= 24) ||
+         (month === 11 && day <= 7);
+
+     // Christmas: December 18 - January 6
+     var christmas =
+         (month === 12 && day >= 18) ||
+         (month === 1 && day <= 6);
+
+     if (halloween) {
+        document.body.classList.add("halloween");
+     } else if (christmas) {
+        document.body.classList.add("christmas");
+     }
+})();
+    </script>
+
 </body>
 </html>
