@@ -81,7 +81,7 @@ Original software copyright © 2016 exnil.
 
 The original planner provided the foundation for the calendar interface and crop-planning system. This adaptation modifies that foundation to support *Travellers Rest*, including its crops, growth mechanics, currency system, and visual presentation.
 
-Travellers Rest and its associated game artwork belong to their respective rights holders.
+*Travellers Rest and its associated game artwork belong to their respective rights holders.*
 
 ## License
 
